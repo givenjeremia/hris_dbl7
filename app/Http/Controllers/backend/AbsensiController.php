@@ -35,6 +35,7 @@ class AbsensiController extends Controller
     public function create()
     {
         //
+        $test = "test test";
     }
 
     /**
