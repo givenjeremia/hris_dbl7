@@ -17,4 +17,5 @@ class pendapatan extends Model
     {
         return $this->hasOne('App\jabatan','id','role');
     }
+    
 }

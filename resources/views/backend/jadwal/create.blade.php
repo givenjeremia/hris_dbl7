@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="content-header">
-    <div class="d-none" id='bulan'>{{$month}}</div>
+    {{-- <div class="d-none" id='bulan'>{{$month}}</div> --}}
     <div class="d-none" id='pegawai'>{{$id}}</div>
     <div class="d-none" id='type'>{{$type}}</div>
     <div class="container">
@@ -51,7 +51,9 @@
                     <div class="card-body">
                             <form method="POST" onsubmit="return validasiinput();" role="form" enctype="multipart/form-data"
                                     action="{{url('/backend/jadwal')}}">
-                                     
+                                    <input type="hidden" class="hidden" value="{{$id}}" name="Ids">
+                                        {{-- <input type="text" class="hidden" value="{{$month}}" name="month"> --}}
+                                        <input type="hidden" class="hidden" value="{{$type}}" name="type"> 
                         <div class="table-responsive">
                             
                             <table id="list-data" class="table table-bordered table-striped">
@@ -64,32 +66,38 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($date as $d)
+                                    @php
+                                    $dt = strtotime($d);
+                                    $i = date('d',$dt);
+                                    $id_nama =(int)$i;
+                                   @endphp
+
                                     <tr>
                                         <div class="d-none">
-                                        <input type="text" class="hidden" value="{{$id}}" name="Ids">
-                                        <input type="text" class="hidden" value="{{$month}}" name="month">
-                                        <input type="text" class="hidden" value="{{$type}}" name="type">
-                                        <input type="text" class="hidden" value="{{$start}}" name="date_start">
-                                        <input type="text" class="hidden" value="{{$end}}" name="date_end">
-                                        <td><p class="fs-5" id="tanggal">{{$d}}</p></td>
+                                        
+                                        <input type="text" class="hidden" value="{{$d->toDateString()}}" name="input[{{$id_nama}}][date]">
+
+                                        {{-- <input type="text" class="hidden" value="{{$start}}" name="date_start"> --}}
+                                        {{-- <input type="text" class="hidden" value="{{$end}}" name="date_end"> --}}
+                                        <td><p class="fs-5" id="tanggal">{{$d->toDateString()}}</p></td>
+                                        
                                     </div>
-                                        @php
-                                        $dt = strtotime($d);
-                                        $i = date('d',$dt);
-                                        $id_nama =(int)$i;
-                                       @endphp
-                                    <td><select aria-label="Default select example" class="form-select " id="{{$d}}select" name={{$id_nama}}>
+                                      
+                                    <td><select aria-label="Default select example" class="form-select " id="{{$d}}select" name="input[{{$id_nama}}][shift]">
                                         @foreach ($shift as $s)
                                         <option value={{$s->id}} >
                                             {{$s->nama}}
                                         </option>
                                         @endforeach
-                                        <option value='libur' id="libur{{$d}}" >
+                                        {{-- <option value='libur' id="libur{{$d}}" >
                                             Libur
-                                        </option>
+                                        </option> --}}
                                     </select></td>
-                                    <td id={{$d}} class={{'text-secondary'}}></td>
-                                    </tr>@endforeach
+                                    <td id={{$d}} class={{'text-secondary'}}>
+                                    <textarea class="form-select "  name="input[{{$id_nama}}][keterangan]" id="{{$d}}keterangan"></textarea>
+                                    </td>
+                                    </tr>
+                                @endforeach
                               
                                 </tbody>
                                 <tfoot>

@@ -15,7 +15,6 @@ class Pegawai extends Migration
             $table->string('id_divisi');
             $table->string('id_jabatan');
             $table->string('no_rekening');
-            $table->string('id_kantor');
         });
     }
 

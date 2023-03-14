@@ -56,6 +56,8 @@ Route::prefix('backend')->group(function () {
     Route::get('list-add-jadwal','backend\JadwalshiftCotroller@listdata');
     Route::get('list-jadwal','backend\JadwalshiftCotroller@Listjadwal');
     Route::get('slug-id/{month}/{year}/{type}/{time}','backend\JadwalshiftCotroller@slugid');
+    Route::get('detail-jadwal/{type}/{tanggal}','backend\JadwalshiftCotroller@detailJadwal');
+
     
     //lembur
     Route::resource('lembur','backend\lemburController');

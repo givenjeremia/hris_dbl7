@@ -1,3 +1,5 @@
+const { Alert } = require("bootstrap");
+const { queue } = require("jquery");
 
 function inputjadwal(){
 //  get data
@@ -55,7 +57,7 @@ function inputjadwal(){
     }
 );
       (async () => {
-        const steps = ['1', '2', '3']
+        const steps = ['1', '2', '3','4']
         const Queue = Swal.mixin({
       progressSteps: steps,
       confirmButtonText: 'Next',
@@ -129,31 +131,77 @@ function inputjadwal(){
    ///////////////////////////////////
     const getid = getId();
     if(getid != null ){
-    const { value: dates } = await Queue.fire({
-    title: 'Select Mounts',
-    input: 'select',
-    inputOptions:options_mount,
-    inputValue: '1',
-    confirmButtonText: 'next',
+
+   
+
+  const { value: date_range } = 
+  await Queue.fire({
+    title: 'Selected Date',
+    html:
+    '<div class="form-group">'+
+    '<label for="exampleInputEmail1">Date Start</label>'+
+    '<input type="date" class="form-control" id="date_start" name="date_start" required autofocus>'+
+'</div>'+
+'<div class="form-group">'+
+'<label for="exampleInputEmail1">Date End</label>'+
+'<input type="date" class="form-control" id="date_end" name="date_end" required>'+
+'</div>'
+      ,
+    confirmButtonText: 'Next',
     showCancelButton: true,
     currentProgressStep: 2,
-  
+    showClass: { backdrop: 'swal2-noanimation' },
+    focusConfirm: false,
+        preConfirm: () => {
+          let date_start =  document.getElementById('date_start').value;
+          let date_end =  document.getElementById('date_end').value;
+
+          if (!date_start) {
+            alert("Date Start Cannot Be Null");
+            return false;
+          }
+          else if(!date_end){
+            alert("Date End Cannot Be Null");
+            return false;
+          }
+          else{
+            return [date_start,date_end];
+          }          
+        
+        }
+    
+  })
+  if (date_range) {
+    Swal.fire(JSON.stringify(date_range))
   }
-  )
+  
+
   function getdates(){
-    return dates
+    return date_range
   }
-   }
-  
-   await Queue.fire({
+
+  await Queue.fire({
     title: 'Can You Send?',
     confirmButtonText: 'Send',
     currentProgressStep: 3,
+    showCancelButton: true,
+
+    preConfirm :() => {
+    window.location.assign(''+ url+'/backend/add-jadwal/'+ getId() +'/' +getdates()+'/'+ categorys +'')
+
+    }
+
   
   }
   ).then(function(){
-    window.location.assign(''+ url+'/backend/add-jadwal/'+ getId() +'/'+ getdates()+'/'+ categorys +'')
+    // window.location.assign(''+ url+'/backend/add-jadwal/'+ getId() +'/' + getKeterangan()+ '/' +getdates()+'/'+ categorys +'')
   });
+
+   }
+   
+  
+   
+  
       })()
     }
   );
@@ -195,8 +243,13 @@ function hapusdata(kode) {
                       'Deleted!',
                       'Your file has been deleted.',
                       'success'
-                  )
-                  $('#list-data').DataTable().ajax.reload();
+                  ).then(function () {
+                    window.location.reload();
+                  })
+                  // $('#exampleModalScrollable').hide();
+                  // $('#list-data').DataTable().ajax.reload();
+                  // window.location.reload();
+
               }
           });
       }
@@ -219,22 +272,25 @@ $.ajax(url, // request url
           });  
          
         },
-});s
-var url = "/backend/data-divisi-ajax";
-$.ajax(url, // request url
-    {
-        dataType: 'json', // type of response data
-        timeout: 500,     // timeout milliseconds
-        success: function (data,status,xhr) {   // success callback function
-          data.data.forEach(element => {
-            var id = element.id
-            var nama = element.nama
-            var shift_id = element.id_shift
-            $('#Devisi_'+id+'_'+ shift_id+'').html(nama)
-          });  
-         
-        },
 });
+$('#Devisi_1_1').html("asdasda");
+var url = "/backend/data-divisi-ajax";
+  $.ajax(url, // request url
+      {
+          dataType: 'json', // type of response data
+          timeout: 500,     // timeout milliseconds
+          success: function (data,status,xhr) {   // success callback function
+            // alert(url);
+            data.data.forEach(element => {
+              var id = element.id
+              var nama = element.nama
+              var shift_id = element.id_shift
+              $('#Devisi_'+1+'_'+ 1+'').html("asdasda")
+             
+            });  
+           
+          },
+  });
 
 var url = "/backend/data-pegawai-ajax";
 $.ajax(url, // request url
@@ -271,3 +327,28 @@ $.ajax(url, // request url
         }  
         },
 });
+
+
+function showDetail(type,tanggal) {
+  // alert(type+' '+tanggal+' ');
+  var url = "/backend/detail-jadwal/"+type+"/"+tanggal;
+  $.ajax(url, // request url
+    {
+   
+        dataType: 'json', // type of response data
+        timeout: 500,     // timeout milliseconds
+        success: function (data,status,xhr) {   // success callback function
+          // alert(data.msg);
+          $("#modalContent").html(data.msg);
+          $("#modal-dialog").addClass("modal-dialog-scrollable");
+          // data.data.forEach(element => {
+          //   // alert(element.keterangan);
+          //   // modalContent
+          //   // var id = element.id
+          //   // var nama = element.nama
+          //   // var shift_id = element.id_shift
+          // });  
+         
+        },
+});
+}

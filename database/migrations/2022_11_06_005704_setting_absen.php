@@ -18,6 +18,7 @@ class SettingAbsen extends Migration
             $table->string('palingcepat')->nulllable();
             $table->string('palinglambat')->nullable();
             $table->string('date_create_gaji')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -29,5 +30,6 @@ class SettingAbsen extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('setting_absen');
     }
 }

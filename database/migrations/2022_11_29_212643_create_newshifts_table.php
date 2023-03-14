@@ -15,14 +15,10 @@ class CreateNewshiftsTable extends Migration
     {
         Schema::create('new_jadwal_shifts', function (Blueprint $table) {
             $table->id();
-            $table->string('Ids');
-            $table->date('date_start')->nullable();
-            $table->date('date_end')->nullable();
-            for($x = 1; $x <= 31; $x++){
-                $table->string("$x")->nullable();
-                }
-            $table->string('month')->nullable();
+            $table->string('Ids')->nullable();
             $table->string('type')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

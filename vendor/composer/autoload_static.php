@@ -5193,6 +5193,7 @@ class ComposerStaticInit09580fe41d343deaebacaee58ff85526
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SettingAbsenSeeder' => __DIR__ . '/../..' . '/database/seeds/SettingAbsenSeeder.php',
         'SettingTableSeeder' => __DIR__ . '/../..' . '/database/seeds/SettingTableSeeder.php',
         'Spatie\\Permission\\Commands\\CacheReset' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Commands/CacheReset.php',
         'Spatie\\Permission\\Commands\\CreatePermission' => __DIR__ . '/..' . '/spatie/laravel-permission/src/Commands/CreatePermission.php',

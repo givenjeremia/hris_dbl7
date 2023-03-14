@@ -13,15 +13,15 @@ class SlugJadwalShift extends Migration
      */
     public function up()
     {
-        Schema::create('slug_jadwal_shifts', function (Blueprint $table) {
-            $table->id();
-            $table->string('Ids');
-            $table->string('years');
-            $table->string('month')->nullable();
-            $table->string('timer')->nullable();
-            $table->string('type')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('slug_jadwal_shifts', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('Ids');
+        //     $table->string('years');
+        //     $table->string('month')->nullable();
+        //     $table->string('timer')->nullable();
+        //     $table->string('type')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -13,18 +13,18 @@ class CreateJadwalShiftsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jadwal_shifts', function (Blueprint $table) {
-            $table->id();
-            $table->string('Ids');
-            $table->date('date')->nullable();
-            $table->string('shift')->nullable();
-            $table->string('month')->nullable();
-            $table->string('keterangan')->nullable();
-            $table->string('type')->nullable();
-            $table->string('urut')->nullable();
-            $table->string('slug');
-            $table->timestamps();
-        });
+        // Schema::create('jadwal_shifts', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('Ids');
+        //     $table->date('date')->nullable();
+        //     $table->string('shift')->nullable();
+        //     $table->string('month')->nullable();
+        //     $table->string('keterangan')->nullable();
+        //     $table->string('type')->nullable();
+        //     $table->string('urut')->nullable();
+        //     $table->string('slug');
+        //     $table->timestamps();
+        // });
     }
 
     /**
