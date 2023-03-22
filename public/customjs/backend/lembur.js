@@ -13,7 +13,7 @@ $(function () {
             },
             { data: 'nama', name: 'nama' },
             { data: 'keterangan', name: 'keterangan' },
-            { data: 'date', name: 'date' },           
+            { data: 'tanggal', name: 'tanggal' },           
             { data: 'start_time', name: 'start_time' },
             { data: 'end_time', name: 'end_time' },
             { data: 'status', name: 'status', },
@@ -89,7 +89,7 @@ $(function () {
             },
             { data: 'nama', name: 'nama' },
             { data: 'keterangan', name: 'keterangan' },
-            { data: 'date', name: 'date' },           
+            { data: 'tanggal', name: 'tanggal' },           
             { data: 'start_time', name: 'start_time' },
             { data: 'end_time', name: 'end_time' },
             {

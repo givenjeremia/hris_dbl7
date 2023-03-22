@@ -16,7 +16,8 @@ class laporangaji extends Controller
      */
     public function index()
     {
-        $data = mastergaji::whereNotIn('type',['umk'])->get();
+        $data = mastergaji::whereNotIn('keterangan',['tk'])->get();
+        // dd($data);
         return view('backend.laporangaji.index',compact('data'));
     }
     public function listdata(){
@@ -24,10 +25,10 @@ class laporangaji extends Controller
         return Datatables::of(DB::table('mastergajis as mg')
         ->leftjoin('pegawai as p', 'mg.role', '=', 'p.id')
         ->leftjoin('pendapatangajis as pg', 'mg.id', '=', 'pg.slug_id')
-        ->leftjoin('potongangajis as pgs', 'pg.id', '=', 'pgs.pendapatan_id')
+        ->leftjoin('potongangajis as pgs', 'pg.id', '=', 'pgs.pendapatangajis_id')
         ->select('mg.*',
-        'pg.type as nama_pg',
-        'pg.data as data_pg',
+        'pg.keterangan as nama_pg',
+        'pg.nomimal as data_pg',
         'pgs.type as nama_pgs',
         'pgs.data as data_pgs',
         'p.nama as nama_pegawai'

@@ -54,6 +54,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                      
                             @foreach ($data as $row)
                                 <tr>
                                     <td>{{$row->id}}</td>

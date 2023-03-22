@@ -15,12 +15,12 @@ class CreateLembursTable extends Migration
     {
         Schema::create('lemburs', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->nullable();
-            $table->string('user_id')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->string('keterangan')->nullable();
+
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
-            $table->string('keterangan')->nullable();
-            $table->string('status')->nullable();
+            
             $table->timestamps();
         });
     }

@@ -13,13 +13,13 @@ class Test extends Migration
      */
     public function up()
     {
-        Schema::create('test', function (Blueprint $table) {
-            $table->id();
-            for($x = 1; $x <= 10; $x++){
-            $table->string("$x")->nullable();
-            }
-            $table->timestamps();
-        });
+        // Schema::create('test', function (Blueprint $table) {
+        //     $table->id();
+        //     for($x = 1; $x <= 10; $x++){
+        //     $table->string("$x")->nullable();
+        //     }
+        //     $table->timestamps();
+        // });
     }
 
     /**

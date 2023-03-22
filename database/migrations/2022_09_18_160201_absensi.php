@@ -29,15 +29,15 @@ class Absensi extends Migration
             $table->string('long_masuk')->nullable();
             $table->string('lat_pulang')->nullable(); 
             $table->string('long_pulang')->nullable();
-            $table->string('id_pegawai')->nullable($value = true);
-            $table->string('id_client')->nullable($value = true);
             $table->time('masuk')->nullable($value = true);
             $table->time('pulang')->nullable($value = true);
             $table->date('date');
             $table->string('lokasi_masuk')->nullable();
             $table->string('lokasi_pulang')->nullable();
             $table->string('status')->nullable($value = true);
-            $table->string('keterangan')->nullable($value = true);
+            // $table->string('keterangan')->nullable($value = true);
+            // $table->string('id_pegawai')->nullable($value = true);
+            // $table->string('id_client')->nullable($value = true);
             $table->timestamps();
         });
     }

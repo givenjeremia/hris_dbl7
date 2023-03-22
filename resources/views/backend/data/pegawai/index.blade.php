@@ -51,7 +51,7 @@
                                         <th>Tgl Lahir</th>
                                         <th>Alamat</th>
                                         <th>Divisi</th>
-                                        <th>Jabatan</th>
+                                        <th>Pendapatan</th>
                                         <th>No Rekening</th>
                                         <th>Kantor</th>
                                         <th class="text-center">Aksi</th>

@@ -22,17 +22,19 @@ class lemburController extends Controller
         return view('backend.lembur.permohonan');
     }
     public function listdata(){
-        return Datatables::of(DB::table('lemburs as l')
+        $master = DB::table('lemburs as l')
         ->where('status','Diterima')
-        ->leftjoin('pegawai as p','l.user_id','=','p.id')
+        ->leftjoin('pegawai as p','l.pegawai_id','=','p.id')
         ->select('l.*','p.nama as nama')
         ->orwhere('status','Ditolak')
-        ->get())->make(true);
+        ->get();
+        // dd($master);
+        return Datatables::of($master)->make(true);
     }
     public function listdataP(){
         return Datatables::of(DB::table('lemburs as l')
         ->where('status','pending')
-        ->leftjoin('pegawai as p','l.user_id','=','p.id')
+        ->leftjoin('pegawai as p','l.pegawai_id','=','p.id')
         ->select('l.*','p.nama as nama')
         ->get())->make(true);
     }
@@ -86,13 +88,13 @@ class lemburController extends Controller
                 lembur::where('id',$id)->update([
                     'status' => 'Diterima'
                 ]);
-                return redirect('/backend/lembur')->with('status','Cuti Di Terima');
+                return redirect('/backend/lembur')->with('status','Lembur Di Terima');
             }
             elseif($status == 'ditolak'){
                 lembur::where('id',$id)->update([
                     'status' => 'Ditolak'
                 ]);
-                return redirect('/backend/lembur')->with('danger','Cuti Di Tolak');
+                return redirect('/backend/lembur')->with('danger','Lembur Di Tolak');
             }
             else{
                 return redirect('/backend/permohonan-lembur')->with('danger','input yang ada masukan salah');

@@ -12,9 +12,9 @@ class Pegawai extends Migration
             $table->string('nama');
             $table->string('tgl_lahir');
             $table->string('alamat');
-            $table->string('id_divisi');
-            $table->string('id_jabatan');
             $table->string('no_rekening');
+            // $table->string('id_divisi');
+            // $table->string('id_jabatan');
         });
     }
 

@@ -19,7 +19,26 @@ class AddPegawaiidColumn extends Migration
         //     $table->foreign('pegawai_id')->references('id')->on('pegawai');
         // });
         Schema::table('lemburs' , function(Blueprint $table){
-            $table->unsignedBigInteger('pegawai_id');
+            $table->unsignedBigInteger('pegawai_id')->nullable();
+            $table->foreign('pegawai_id')->references('id')->on('pegawai');
+        });
+        // BPJS,cuties,absensi,potongan gajis
+        Schema::table('absensi' , function(Blueprint $table){
+            $table->unsignedBigInteger('pegawai_id')->nullable();
+            $table->foreign('pegawai_id')->references('id')->on('pegawai');
+        });
+
+        Schema::table('bpjs' , function(Blueprint $table){
+            $table->unsignedBigInteger('pegawai_id')->nullable();
+            $table->foreign('pegawai_id')->references('id')->on('pegawai');
+        });
+
+        Schema::table('cutis' , function(Blueprint $table){
+            $table->unsignedBigInteger('pegawai_id')->nullable();
+            $table->foreign('pegawai_id')->references('id')->on('pegawai');
+        });
+        Schema::table('pendapatangajis' , function(Blueprint $table){
+            $table->unsignedBigInteger('pegawai_id')->nullable();
             $table->foreign('pegawai_id')->references('id')->on('pegawai');
         });
     }
@@ -37,6 +56,22 @@ class AddPegawaiidColumn extends Migration
         //     $table->dropColumn('pegawai_id');
         // });
         Schema::table('lemburs' , function (Blueprint $table){
+            $table->dropForeign(['pegawai_id']);
+            $table->dropColumn('pegawai_id');
+        });
+        Schema::table('absensi' , function (Blueprint $table){
+            $table->dropForeign(['pegawai_id']);
+            $table->dropColumn('pegawai_id');
+        });
+        Schema::table('bpjs' , function (Blueprint $table){
+            $table->dropForeign(['pegawai_id']);
+            $table->dropColumn('pegawai_id');
+        });
+        Schema::table('cutis' , function (Blueprint $table){
+            $table->dropForeign(['pegawai_id']);
+            $table->dropColumn('pegawai_id');
+        });
+        Schema::table('pendapatangajis' , function (Blueprint $table){
             $table->dropForeign(['pegawai_id']);
             $table->dropColumn('pegawai_id');
         });

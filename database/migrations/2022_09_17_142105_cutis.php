@@ -13,16 +13,16 @@ class Cutis extends Migration
      */
     public function up()
     {
-        Schema::create('cuti', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->date('mulai');
-            $table->date('akhir');
-            $table->string('keterangan');
-            $table->string('status');
-            $table->string('subjek');
-            $table->timestamps();
-        });
+        // Schema::create('cuti', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('nama');
+        //     $table->date('mulai');
+        //     $table->date('akhir');
+        //     $table->string('keterangan');
+        //     $table->string('status');
+        //     $table->string('subjek');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -32,6 +32,6 @@ class Cutis extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cuti');
+        // Schema::dropIfExists('cuti');
     }
 }

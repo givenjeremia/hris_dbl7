@@ -13,14 +13,14 @@ class Terlambat extends Migration
      */
     public function up()
     {
-        schema::create('terlambat', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('id_pegawai');
-            $table->date('date');
-            $table->bigInteger('masuk');
-            $table->bigInteger('pulang');
-            $table->timestamps();
-        });
+        // schema::create('terlambat', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        //     // $table->string('id_pegawai');
+        //     $table->date('date');
+        //     $table->bigInteger('masuk');
+        //     $table->bigInteger('pulang');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -30,6 +30,6 @@ class Terlambat extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('terlambat');
+        // Schema::dropIfExists('terlambat');
     }
 }

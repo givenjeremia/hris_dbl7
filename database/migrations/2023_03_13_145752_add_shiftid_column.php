@@ -15,7 +15,7 @@ class AddShiftidColumn extends Migration
     {
         //
         Schema::table('new_jadwal_shifts' , function(Blueprint $table){
-            $table->unsignedBigInteger('shift_id');
+            $table->unsignedBigInteger('shift_id')->nullable();
             $table->foreign('shift_id')->references('id')->on('shift');
         });
     }

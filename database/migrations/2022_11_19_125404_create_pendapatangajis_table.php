@@ -15,9 +15,9 @@ class CreatePendapatangajisTable extends Migration
     {
         Schema::create('pendapatangajis', function (Blueprint $table) {
             $table->id();
-            $table->string('id_user');
-            $table->string('data')->nullable();
-            $table->string('type')->nullable();
+            // $table->string('id_user');
+            $table->integer('nomimal')->nullable();
+            $table->longtext('keterangan')->nullable();
             $table->string('slug_id')->nullable();
             $table->timestamps();
         });

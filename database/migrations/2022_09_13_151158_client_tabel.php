@@ -15,13 +15,13 @@ class ClientTabel extends Migration
     {
         Schema::create('client', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->date('kontrak');
-            $table->string('email');
-            $table->string('alamat');
-            $table->string('lokasi');
-            $table->string('lat')->nullable();
-            $table->string('long')->nullable();
+            $table->string('nama')->nullable();
+            $table->date('kontrak')->nullable();
+            $table->string('email')->nullable();
+            $table->longtext('alamat')->nullable();
+            $table->string('lokasi')->nullable();
+            $table->longtext('lat')->nullable();
+            $table->longtext('long')->nullable();
             $table->timestamps();
         });
     }

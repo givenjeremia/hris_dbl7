@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'superadmin@gmail.com',
                 'telp'=>'09849020989',
                 'level'=>'super admin',
-                'password' => Hash::make('d7676543'),
+                'password' => Hash::make('12345678'),
             ],
             [
                 'name' => 'admin',
@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'telp'=>'09849020989',
                 'level'=>'admin',
-                'password' => Hash::make('d7676543'),
+                'password' => Hash::make('12345678'),
             ]
 
         ];

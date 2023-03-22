@@ -20,7 +20,7 @@ class gajiseeder extends Seeder
     {
         // umk seed
         mastergaji::create([
-        'data'=>'2000000',
+        'nomimal'=>'2000000',
         'type'=>'umk',
         'role'=>'all'
         ]);

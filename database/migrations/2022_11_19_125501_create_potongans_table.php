@@ -13,13 +13,13 @@ class CreatePotongansTable extends Migration
      */
     public function up()
     {
-        Schema::create('potongans', function (Blueprint $table) {
-            $table->id();
-            $table->string('data')->nullable();
-            $table->string('type')->nullable();
-            $table->string('role')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('potongans', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('data')->nullable();
+        //     $table->string('type')->nullable();
+        //     $table->string('role')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -29,6 +29,6 @@ class CreatePotongansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('potongans');
+        // Schema::dropIfExists('potongans');
     }
 }

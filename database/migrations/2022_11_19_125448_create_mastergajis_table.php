@@ -15,8 +15,8 @@ class CreateMastergajisTable extends Migration
     {
         Schema::create('mastergajis', function (Blueprint $table) {
             $table->id();
-            $table->string('data')->nullable();
-            $table->string('type')->nullable();
+            $table->integer('nominal')->nullable();;
+            $table->longtext('keterangan')->nullable();
             $table->string('role')->nullable();
             $table->timestamps();
         });

@@ -12,13 +12,13 @@ $(function () {
                 }
             },
             { data: 'nama', name: 'nama' },
-            { data: 'tgl_lahir', render:function(data, type, row, meta){
+        { data: 'tgl_lahir', render:function(data, type, row, meta){
                 split = row.tgl_lahir.split('-');
                 return [split[2], split[1], split[0]].join('-');
             }, name: 'tgl_lahir' },
             { data: 'alamat', name: 'alamat' },
             { data: 'divisi', name: 'divisi' },
-            { data: 'jabatan', name: 'jabatan' },
+            { data: 'pendapatan', name: 'pendapatan' },
             { data: 'no_rekening', name: 'no_rekening' },
             { data: 'kantor', name: 'kantor' },
             {

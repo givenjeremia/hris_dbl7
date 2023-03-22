@@ -34,6 +34,6 @@ class CreateJadwalShiftsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwal_shifts');
+        // Schema::dropIfExists('jadwal_shifts');
     }
 }

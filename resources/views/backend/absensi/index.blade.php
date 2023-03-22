@@ -34,11 +34,11 @@
                     <div class="card-header">
                         <h3 class="card-title">Data Absen</h3>
                         <div class="card-tools">
-                            <a href="{{url('/backend/admin/create')}}">
+                            {{-- <a href="{{url('/backend/admin/create')}}">
                                 <button type="button" class="btn btn-default btn-sm"><i class="fas fa-plus"></i> Tambah
                                     Data
                                 </button>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -48,12 +48,13 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Nama Kantor</th>
                                         <th>Nama Pegawai</th>
                                         <th>Masuk</th>
                                         <th>Pulang</th>
                                         <th>status</th>
-                                        <th>lokasi</th>
-                                        <th>keterangan</th>
+                                        {{-- <th>lokasi</th> --}}
+                                        {{-- <th>keterangan</th> --}}
                                        
                                     </tr>
                                 </thead>
@@ -63,12 +64,13 @@
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
+                                        <th>Nama Kantor</th>
                                         <th>Nama Pegawai</th>
                                         <th>Masuk</th>
                                         <th>Pulang</th>
                                         <th>status</th>
-                                        <th>lokasi</th>
-                                        <th>keterangan</th>
+                                        {{-- <th>lokasi</th>
+                                        <th>keterangan</th> --}}
                                        
                                     </tr>
                                 </tfoot>

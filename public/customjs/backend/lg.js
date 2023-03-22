@@ -54,7 +54,7 @@ function hapusdata(kode) {
             timeout: 500,     // timeout milliseconds
             success: function (data,status,xhr) {   // success callback function
                 data.data.forEach(element => {
-                    if(element.nama_pg ==='umk'){
+                    if(element.nama_pg ==='UMK'){
                         var id = element.id
                         var datas= element.data_pg
                         var data =`${rupiah.format(datas)}`

@@ -21,6 +21,7 @@ class CreateNewshiftsTable extends Migration
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**

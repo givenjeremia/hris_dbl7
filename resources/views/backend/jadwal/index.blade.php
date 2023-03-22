@@ -130,11 +130,9 @@
                                         {{-- <th scope="col">Nama</th> --}}
                                         {{-- <th scope="col">date range</th> --}}
                                         <th scope="col">type</th>
-                                        {{-- @for ($i = 1; $i < 32; $i++) <th id="shift">{{$i}}</th>
-                                            @endfor --}}
-                                            {{-- <th scope="col" class="text-center">Aksi</th> --}}
-
-
+                                        @for ($i = 1; $i <= count($date_1_month); $i++) <th scope="col" id="shift">
+                                            {{$i}}</th>
+                                            @endfor
                                     </tr>
                                 </tfoot>
                             </table>

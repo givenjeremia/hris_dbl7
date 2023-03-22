@@ -20,10 +20,11 @@ class AbsensiController extends Controller
     }
     public function DataAbsen(){
         $master = DB::table('absensi')
-                    ->join('pegawai', 'absensi.id_pegawai', '=', 'pegawai.id')
-                    ->select('absensi.*','pegawai.nama as id_pegawai')
+                    ->join('pegawai', 'absensi.pegawai_id', '=', 'pegawai.id')
+                    ->join('client', 'absensi.client_id', '=', 'client.id')
+                    ->select('absensi.*','pegawai.nama as id_pegawai','client.nama as id_client')
                     ->get();
-
+        // dd($master);
         return Datatables::of($master)->make(true);
     }
 

@@ -11,19 +11,11 @@ $(function () {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
+            { data: 'id_client', name: 'id_client' },
             { data: 'id_pegawai', name: 'id_pegawai' },
             { data: 'masuk', name: 'masuk' },
             { data: 'pulang', name: 'pulang' },
             { data: 'status', name: 'status' },
-            { data: 'long', name: 'long' },
-            {
-                render: function (data, type, row) {
-                    return '<a href="/backend/' + row['id'] + '/edit/'+ data +'" class="btn btn-success"><i class="fa fa-wrench"></i></a> <button class="btn btn-danger" onclick="hapusdata(' + row['id'] + ')"><i class="fa fa-trash"></i></button>'
-                },
-                "className": 'text-center',
-                "orderable": false,
-                "data": null,
-            },
         ],
         pageLength: 10,
         lengthMenu: [[5, 10, 20], [5, 10, 20]]
