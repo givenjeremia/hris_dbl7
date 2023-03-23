@@ -1,4 +1,9 @@
 
+let rupiah = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+});
+
 $(function () {
     $('#list-data').DataTable({
         processing: true,
@@ -11,7 +16,7 @@ $(function () {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
-            { data: 'data', name: 'jumlah' },
+            { data: 'nominal', name: 'jumlah' },
             { data:'role', name:'role' },
             {
                 render: function (data, type, row) {

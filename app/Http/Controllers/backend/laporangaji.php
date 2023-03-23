@@ -16,13 +16,12 @@ class laporangaji extends Controller
      */
     public function index()
     {
-        $data = mastergaji::whereNotIn('keterangan',['tk'])->get();
+        $data = mastergaji::whereNotIn('keterangan',['umk'])->get();
         // dd($data);
         return view('backend.laporangaji.index',compact('data'));
     }
     public function listdata(){
-    
-        return Datatables::of(DB::table('mastergajis as mg')
+        $master = DB::table('mastergajis as mg')
         ->leftjoin('pegawai as p', 'mg.role', '=', 'p.id')
         ->leftjoin('pendapatangajis as pg', 'mg.id', '=', 'pg.slug_id')
         ->leftjoin('potongangajis as pgs', 'pg.id', '=', 'pgs.pendapatangajis_id')
@@ -33,7 +32,9 @@ class laporangaji extends Controller
         'pgs.data as data_pgs',
         'p.nama as nama_pegawai'
         )
-        ->get())->make(true);
+        ->get();
+        // dd($master);
+        return Datatables::of($master)->make(true);
     }
     /**
      * Show the form for creating a new resource.

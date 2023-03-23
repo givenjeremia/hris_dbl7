@@ -33,7 +33,7 @@ class umkController extends Controller
         return view('backend.umk.index');
     }
     public function listdata(){
-        return Datatables::of(DB::table('mastergajis')->where('type','umk')
+        return Datatables::of(DB::table('mastergajis')->where('keterangan','umk')
         ->leftjoin('jabatan', function ($join) {
             $join->On('mastergajis.role', '=','jabatan.nama')
             ->orOn('mastergajis.role', '=', 'jabatan.id');
@@ -75,7 +75,7 @@ class umkController extends Controller
      */
     public function create()
     {
-        $check = mastergaji::where('type','umk')->where('role','all')->value('id');
+        $check = mastergaji::where('keterangan','umk')->where('role','all')->value('id');
         $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
         return view('backend.umk.create',compact('jabatan','check'));
     }
@@ -93,9 +93,9 @@ class umkController extends Controller
             'role' => 'required',
         ]);
         mastergaji::create([
-            'data'=>$request->jumlah,
+            'nominal'=>$request->jumlah,
             'role'=>$request->role,
-            'type'=>'umk'
+            'keterangan'=>'umk'
         ]);
         return redirect('/backend/umk')->with('status','Sukses menyimpan data');
     }

@@ -8,8 +8,8 @@ class mastergaji extends Model
 {
     protected $table = 'mastergajis';
     protected $fillable = [
-        'data',
-        'type',
+        'nominal',
+        'keterangan',
         'role'
     ];
 }

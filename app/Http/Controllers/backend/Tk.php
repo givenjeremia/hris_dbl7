@@ -20,29 +20,29 @@ class Tk extends Controller
         return view('backend.tk.index');
     }
     public function listdata(){
-        // return Datatables::of(DB::table('pendapatans')
-        // ->where('type','tunjangan keahlian')
-        // ->join('jabatan', 'pendapatans.role', '=', 'jabatan.id')
-        // ->select('pendapatans.*','jabatan.nama as nama')
-        // ->get())->make(true);
-        $hari_ini = date("Y-m-d");
-        $tgl_pertama = date("Y-m-01", strtotime($hari_ini));
-            $data_arry=range(1, 31);
-                $database = newshift::where('Ids',1)->where('date_start',$tgl_pertama)->select($data_arry)->get();
+        return Datatables::of(DB::table('pendapatans')
+        ->where('type','tunjangan keahlian')
+        ->join('jabatan', 'pendapatans.role', '=', 'jabatan.id')
+        ->select('pendapatans.*','jabatan.nama as nama')
+        ->get())->make(true);
+        // $hari_ini = date("Y-m-d");
+        // $tgl_pertama = date("Y-m-01", strtotime($hari_ini));
+        //     $data_arry=range(1, 31);
+        //         $database = newshift::where('Ids',1)->where('date_start',$tgl_pertama)->select($data_arry)->get();
               
-                foreach($database as $Database){
-                    $databases = $Database;
-                }
-                $datacount = array_count_values($database->toArray()[0]);
-                if($datacount['libur'] == null){
-                    $waktu_kerja_libur= 0;
-                }
-                elseif($datacount['libur'] != null){
-                    $waktu_kerja_libur= $datacount['libur'];
-                }
-                $waktu_kerja = sizeof($databases);
-                return response()->json([   'jumlah libur'=>$waktu_kerja_libur,
-                                            'jumlah_masuk'=>$waktu_kerja  ], 200);
+        //         foreach($database as $Database){
+        //             $databases = $Database;
+        //         }
+        //         $datacount = array_count_values($database->toArray()[0]);
+        //         if($datacount['libur'] == null){
+        //             $waktu_kerja_libur= 0;
+        //         }
+        //         elseif($datacount['libur'] != null){
+        //             $waktu_kerja_libur= $datacount['libur'];
+        //         }
+        //         $waktu_kerja = sizeof($databases);
+        //         return response()->json([   'jumlah libur'=>$waktu_kerja_libur,
+        //                                     'jumlah_masuk'=>$waktu_kerja  ], 200);
     }
     /**
      * Show the form for creating a new resource.

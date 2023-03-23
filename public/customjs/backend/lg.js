@@ -54,6 +54,8 @@ function hapusdata(kode) {
             timeout: 500,     // timeout milliseconds
             success: function (data,status,xhr) {   // success callback function
                 data.data.forEach(element => {
+
+                    $('#list-data').DataTable();
                     if(element.nama_pg ==='UMK'){
                         var id = element.id
                         var datas= element.data_pg
@@ -88,9 +90,10 @@ function hapusdata(kode) {
             }
                 });  
                 data.data.forEach(row => {
-                    if(row.data){
+                    // alert(row.nominal);
+                    if(row.nominal){
                         var id = row.id
-                        var datas= row.data
+                        var datas= row.nominal
                         var data =`${rupiah.format(datas)}`
                         $('#bersih_'+id+'').html(data)  
                     }
