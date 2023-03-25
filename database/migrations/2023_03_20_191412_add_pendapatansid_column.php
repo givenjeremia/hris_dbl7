@@ -19,10 +19,10 @@ class AddPendapatansidColumn extends Migration
             $table->foreign('pendapatans_id')->references('id')->on('pendapatans');
         });
 
-        Schema::table('pegawai' , function(Blueprint $table){
-            $table->unsignedBigInteger('pendapatans_id')->nullable();
-            $table->foreign('pendapatans_id')->references('id')->on('pendapatans');
-        });
+        // Schema::table('pegawai' , function(Blueprint $table){
+        //     $table->unsignedBigInteger('pendapatans_id')->nullable();
+        //     $table->foreign('pendapatans_id')->references('id')->on('pendapatans');
+        // });
 
     }
 
@@ -39,10 +39,10 @@ class AddPendapatansidColumn extends Migration
             $table->dropColumn('pendapatans_id');
         });
 
-        Schema::table('pegawai' , function (Blueprint $table){
-            $table->dropForeign(['pendapatans_id']);
-            $table->dropColumn('pendapatans_id');
-        });
+        // Schema::table('pegawai' , function (Blueprint $table){
+        //     $table->dropForeign(['pendapatans_id']);
+        //     $table->dropColumn('pendapatans_id');
+        // });
 
     }
 }

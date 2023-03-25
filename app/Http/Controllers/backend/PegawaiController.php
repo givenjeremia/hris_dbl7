@@ -25,10 +25,9 @@ class PegawaiController extends Controller
     public function listdata(){
         return Datatables::of(DB::table('pegawai')
         ->leftjoin('divisi','divisi.id','=','pegawai.divisi_id')
-        // ->leftjoin('jabatan','jabatan.id','=','pegawai.id_jabatan')
-        ->leftjoin('pendapatans','pendapatans.id','=','pegawai.pendapatans_id')
+        ->leftjoin('jabatan','jabatan.id','=','pegawai.jabatan_id')
         ->leftjoin('client','client.id','=','pegawai.kantor_id')
-        ->select('pegawai.*','divisi.nama as divisi','pendapatans.data as pendapatan','client.nama as kantor')
+        ->select('pegawai.*','divisi.nama as divisi','jabatan.nama as jabatan','client.nama as kantor')
         ->get())->make(true);
     }
     public function listdataajax(){
@@ -52,7 +51,8 @@ class PegawaiController extends Controller
         $jabatan = DB::table('jabatan')->orderby('nama','asc')->get();
         $kantor = DB::table('client')->orderby('nama','asc')->get();
         $pendapatans = DB::table('pendapatans')->get();
-        return view('backend.data.pegawai.create', compact('divisi','jabatan','kantor','pendapatans'));
+        $jabatans = DB::table('jabatan')->get();
+        return view('backend.data.pegawai.create', compact('divisi','jabatan','kantor','pendapatans','jabatans'));
     }
 
     /**
@@ -68,7 +68,7 @@ class PegawaiController extends Controller
             'tgl_lahir' => 'required',
             'alamat' => 'required',
             'divisi' => 'required',
-            // 'jabatan' => 'required',
+            'jabatan' => 'required',
             'no_rekening' => 'required',
             'password'=> 'required',
             'email'=>'required'
@@ -79,7 +79,7 @@ class PegawaiController extends Controller
             'tgl_lahir' => $tgl_lahir->format('Y-m-d'),
             'alamat' => $request->alamat,
             'divisi_id' => $request->divisi,
-            'pendapatans_id' => $request->pendapatan,
+            'jabatan_id' => $request->jabatan,
             'no_rekening' => $request->no_rekening,
             'kantor_id'=>$request->kantor
         ]);
@@ -123,8 +123,9 @@ class PegawaiController extends Controller
         $jabatan = DB::table('jabatan')->orderby('nama','asc')->get();
         $kantor = DB::table('client')->orderby('nama','asc')->get();
         $pendapatans = DB::table('pendapatans')->get();
+        $jabatans = DB::table('jabatan')->get();
 
-        return view('backend.data.pegawai.edit', compact('data','divisi','jabatan','kantor','pendapatans'));
+        return view('backend.data.pegawai.edit', compact('data','divisi','jabatan','kantor','pendapatans','jabatans'));
     }
 
     /**
@@ -141,7 +142,7 @@ class PegawaiController extends Controller
             'tgl_lahir' => 'required',
             'alamat' => 'required',
             'divisi' => 'required',
-            'pendapatan' => 'required',
+            'jabatan' => 'required',
             'no_rekening' => 'required',
             'kantor'=>'required'
         ]);
@@ -151,7 +152,7 @@ class PegawaiController extends Controller
             'tgl_lahir' => $tgl_lahir->format('Y-m-d'),
             'alamat' => $request->alamat,
             'divisi_id' => $request->divisi,
-            'pendapatans_id' => $request->pendapatan,
+            'jabatan_id' => $request->jabatan,
             'no_rekening' => $request->no_rekening,
             'kantor_id'=>$request->kantor
         ]);

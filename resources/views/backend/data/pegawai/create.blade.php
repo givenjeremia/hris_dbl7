@@ -77,10 +77,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Pendapatan</label>
-                                        <select name="pendapatan" id="" class="form-control" required>
-                                            @foreach($pendapatans as $row)
-                                                <option value="{{$row->id}}">{{$row->type}}</option>
+                                        <label for="exampleInputEmail1">Jabatan</label>
+                                        <select name="jabatan" id="" class="form-control" required>
+                                            @foreach($jabatans as $row)
+                                                <option value="{{$row->id}}">{{$row->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>
