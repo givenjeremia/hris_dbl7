@@ -74,6 +74,11 @@ Route::prefix('backend')->group(function () {
     Route::get('datalist-tlb','backend\Tlb@listdata');
     Route::get('datalist-tk','backend\Tk@listdata');
     Route::get('datalist-lg','backend\laporangaji@listdata');
+    Route::get('datalist-lg-month/{month}','backend\laporangaji@listdatabymonth');
+    Route::get('laporangajiAjax','backend\laporangaji@indexAjax');
+    Route::get('perhitunganGajiAjax','backend\laporangaji@perhitunganGaji');
+
+
     Route::resource('bpjs','backend\bpjskController');
     Route::resource('umk','backend\umkController');
     Route::resource('tunjangankeahlian', 'backend\Tk');

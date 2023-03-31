@@ -28,71 +28,47 @@
             {{ session('status') }}
         </div>
         @endif
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Data Gaji Karyawan </h3>
-                        <div class="card-tools">
+        <div class="row " >
+     
+            <div class="col">
+                    <div class="row ">
+                        <label for="exampleInputEmail1">Tanggal</label>
+                        <div class="col">
+
+                            <div class="form-group">
+                                <input type="month" id="sort_by" class="form-control" name="sort_by" required>
+                            </div>
+            
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                {{-- <p></p> --}}
+                                <div></div>
+                                <button type="button" id="btncari" class="btn btn-primary ">Cari</button>
+                                <div></div>
+                                
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                {{-- <p></p> --}}
+                                <div></div>
+                                <button type="button" id="btnhitungperhitungangaji" class="btn btn-primary ">Hitung Gaji</button>
+                                <div></div>
+                                
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="list-data" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Pegawai</th>
-                                        <th>Date</th>
-                                        <th>Gaji Bersih</th>
-                                        <th>Gaji Pokok</th>
-                                        <th>Tunjangan Keahlian</th>
-                                        <th>Tunjangan Lama Berkerja</th>
-                                        <th>Potongan Bpjs</th>
-                                        <th>Potongan Gaji</th>
-                                        <th class="text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                      
-                            @foreach ($data as $row)
-                                <tr>
-                                    <td>{{$row->id}}</td>
-                                    <td id="nama_{{$row->id}}"></td>
-                                    @php
-                                        $dates=strtotime($row->created_at);
-                                        $date = date('Y-m-d',$dates);
-                                    @endphp
-                                    <td>{{$date}}</td>
-                                    <td id="bersih_{{$row->id}}"></td>
-                                    <td id="umk_{{$row->id}}"></td>
-                                    <td id="tk_{{$row->id}}"></td>
-                                    <td id="tlb_{{$row->id}}"></td>
-                                    <td id="bpjs_{{$row->id}}"></td>
-                                    <td id="potongan_{{$row->id}}"></td>
-                                    <td><button class="btn btn-danger" onclick="hapusdata({{$row->id}})"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                            @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Pegawai</th>
-                                        <th>Date</th>
-                                        <th>Gaji Bersih</th>
-                                        <th>Gaji Pokok</th>
-                                        <th>Tunjangan Keahlian</th>
-                                        <th>Tunjangan Lama Berkerja</th>
-                                        <th>Potongan Bpjs</th>
-                                        <th>Potongan Gaji</th>
-                                        <th class="text-center">Aksi</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                
+                
             </div>
+          
+            <p id="test"></p>
+            
+            <div id="table-laporan">
+                
+            </div>
+          
         </div>
     </div><!-- /.container-fluid -->
 </div>
@@ -102,8 +78,10 @@
 <script src="{{asset('assets/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
 <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+
 @endpush
 
 @push('customscripts')
 <script src="{{asset('customjs/backend/lg.js')}}"></script>
+
 @endpush

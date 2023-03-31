@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Role</label>
                                         <select name="role" id="" class="form-control" required>
-                                            @foreach($jabatan as $row)
+                                            @foreach($divisi as $row)
                                                 <option value="{{$row->id}}">{{$row->nama}}</option>
                                             @endforeach
                                         </select>

@@ -22,8 +22,8 @@ class Tk extends Controller
     public function listdata(){
         return Datatables::of(DB::table('pendapatans')
         ->where('type','tunjangan keahlian')
-        ->join('jabatan', 'pendapatans.role', '=', 'jabatan.id')
-        ->select('pendapatans.*','jabatan.nama as nama')
+        ->join('divisi', 'pendapatans.role', '=', 'divisi.id')
+        ->select('pendapatans.*','divisi.nama as nama')
         ->get())->make(true);
         // $hari_ini = date("Y-m-d");
         // $tgl_pertama = date("Y-m-01", strtotime($hari_ini));
@@ -52,7 +52,8 @@ class Tk extends Controller
     public function create()
     {
         $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
-        return view('backend.tk.create',compact('jabatan'));
+        $divisi = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
+        return view('backend.tk.create',compact('divisi'));
     }
 
     /**
