@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\mastergaji;
-use DataTables;
-use DB;
-use App\jabatan;
+
+use App\bpjs;
 use App\User;
-use App\pegawai;
 use App\Absen;
 use App\cutis;
-use App\bpjs;
+use App\jabatan;
+use App\pegawai;
 use App\potongan;
+use App\mastergaji;
+use App\pendapatan;
 use App\potongangaji;
 use App\pendapatangaji;
-use App\pendapatan;
+use Illuminate\Http\Request;
+use App\Http\Requests\ListCuti;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Updateprofiles;
-use App\Http\Requests\ListCuti;
-use PDF;
+
 class umkController extends Controller
 {
     /**

@@ -9,11 +9,11 @@ use App\pegawai;
 use App\devisi;
 use App\slugJadwal;
 use App\Http\Resources\listdata;
-use DataTables;
 use stdClass;
 use App\JadwalShift;
 use App\newshift;
-use DB;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 

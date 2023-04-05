@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\backend;
 
-use DB;
-use DataTables;
+// use DB;
 use Carbon\Carbon;
 use App\mastergaji;
 use App\potongangaji;
 use App\pendapatangaji;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class laporangaji extends Controller
@@ -50,7 +51,7 @@ class laporangaji extends Controller
         )
         ->get();
         // dd($master);
-        return Datatables::of($master)->make(true);
+        return DataTables::of($master)->make(true);
     }
 
     
@@ -67,7 +68,7 @@ class laporangaji extends Controller
     public function perhitunganGaji(){
         $tanggal_now = Carbon::now();
         // Get Data 
-        $pegawai = DB::table('pegawai')->get();
+        $pegawai = DB::table('pegpreawai')->get();
         $umk = DB::table('mastergajis')->where('keterangan','umk')->get(); // Role By Jabatan
         $tunjangan_keahlian = DB::table('pendapatans')->where('type','tunjangan keahlian')->get(); // Role By Divisi
         // Cek Apakah Bulan Ini Sudah Di Generate

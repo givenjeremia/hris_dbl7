@@ -5,8 +5,8 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\pendapatan;
-use DataTables;
-use DB;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class Tlb extends Controller
 {

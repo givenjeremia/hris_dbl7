@@ -4,8 +4,8 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DataTables;
-use DB;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\newshift;
 use App\pendapatan;
 class Tk extends Controller

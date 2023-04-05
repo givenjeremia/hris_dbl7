@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-use DataTables;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ClientController extends Controller
 {
@@ -14,12 +14,15 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         return view('backend.client.index');
     }
-    public function listdata(){
-        return Datatables::of(DB::table('client')->get())->make(true);
+
+    public function listdata()
+    {
+        return DataTables::of(DB::table('client')->get())->make(true);
     }
 
     /**
@@ -27,9 +30,10 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
-        return view ('backend.client.create');
+        return view('backend.client.create');
     }
 
     /**
@@ -38,6 +42,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -47,7 +52,7 @@ class ClientController extends Controller
             'alamat' => 'required',
             'lokasi' => 'required',
             'lat' => 'required',
-            'long'=> 'required'
+            'long' => 'required'
         ]);
         DB::table('client')->insert([
             'nama' => $request->nama,
@@ -58,7 +63,7 @@ class ClientController extends Controller
             'lat' => $request->lat,
             'long' => $request->long,
         ]);
-        return redirect('/backend/client')->with('status','Sukses menyimpan data');
+        return redirect('/backend/client')->with('status', 'Sukses menyimpan data');
     }
 
     /**
@@ -67,6 +72,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         //
@@ -78,12 +84,11 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $data = DB::table('client')->where('id', $id)->get();
         return view('backend.client.edit', compact('data'));
-        
- 
     }
 
     /**
@@ -93,6 +98,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -102,18 +108,19 @@ class ClientController extends Controller
             'alamat' => 'required',
             'lokasi' => 'required',
             'lat' => 'required',
-            'long'=> 'required'
+            'long' => 'required'
         ]);
         DB::table('client')->where('id', $id)->update([
             'nama' => $request->nama,
             'kontrak' => $request->kontrak,
             'email' => $request->email,
+
             'alamat' => $request->alamat,
             'lokasi' => $request->lokasi,
             'lat' => $request->lat,
             'long' => $request->long,
         ]);
-        return redirect('/backend/client')->with('status','Sukses merubah data');
+        return redirect('/backend/client')->with('status', 'Sukses merubah data');
     }
 
     /**
@@ -122,6 +129,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         DB::table('client')->where('id', $id)->delete();

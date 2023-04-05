@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\cutis;
-use DB;
-use DataTables;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class CutiController extends Controller
 {
@@ -20,7 +20,7 @@ class CutiController extends Controller
        return view ('backend.cuti.index');
     }
     public function listdata(){
-        return Datatables::of(DB::table('cutis')->where('status','Diterima')
+        return DataTables::of(DB::table('cutis')->where('status','Diterima')
         ->orwhere('status','Ditolak')
         ->get())->make(true);
     }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-use DataTables;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 
 class AbsensiController extends Controller
 {
@@ -25,7 +26,7 @@ class AbsensiController extends Controller
                     ->select('absensi.*','pegawai.nama as id_pegawai','client.nama as id_client')
                     ->get();
         // dd($master);
-        return Datatables::of($master)->make(true);
+        return DataTables::of($master)->make(true);
     }
 
     /**

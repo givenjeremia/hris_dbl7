@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-use DataTables;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 
 class DivisiController extends Controller
 {
@@ -20,7 +21,7 @@ class DivisiController extends Controller
     }
 
     public function listdata(){
-        return Datatables::of(DB::table('divisi')->get())->make(true);
+        return DataTables::of(DB::table('divisi')->get())->make(true);
     }
     public function listdataajax(){
         $data= DB::table('divisi')

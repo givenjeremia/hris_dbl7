@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DataTables;
-use DB;
 use App\bpjs;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 class bpjskController extends Controller
 {
     /**
@@ -19,7 +19,7 @@ class bpjskController extends Controller
         return view('backend.data.bpjs.index');
     }
     public function listdata(){
-        return Datatables::of(DB::table('bpjs')->get())->make(true);
+        return DataTables::of(DB::table('bpjs')->get())->make(true);
     }
     /**
      * Show the form for creating a new resource.

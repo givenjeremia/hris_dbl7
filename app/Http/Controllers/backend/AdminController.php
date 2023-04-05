@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers\backend;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DataTables;
 use App\User;
-use File;
-use Hash;
-use DB;
+use Illuminate\Http\Request;
+
+use Yajra\DataTables\DataTables;
+use Illuminate\Http\Testing\File;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
 
 class AdminController extends Controller
 {
@@ -28,7 +30,7 @@ class AdminController extends Controller
 
     //=================================================================
     public function listdata(){
-        return Datatables::of(User::whereNotIn('level', ['pegawai'])->get())->make(true);
+        return DataTables::of(User::whereNotIn('level', ['pegawai'])->get())->make(true);
     }
     
     //=================================================================
