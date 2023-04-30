@@ -38,7 +38,6 @@
                                     class="fas fa-plus"></i> Tambah
                                 Data
                             </button>
-
                         </div>
                     </div>
                     <div class="card-body">
@@ -161,5 +160,6 @@
 @endpush
 
 @push('customscripts')
+<script src="{{asset('customjs/backend/dashboard.js')}}"></script>
 <script src="{{asset('customjs/backend/jadwal.js')}}"></script>
 @endpush

@@ -17,6 +17,7 @@
     @yield('customcss')
     <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="hold-transition layout-top-nav">

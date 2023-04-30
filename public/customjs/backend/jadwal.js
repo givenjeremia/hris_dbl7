@@ -1,5 +1,5 @@
-const { Alert } = require("bootstrap");
-const { queue } = require("jquery");
+// const { Alert } = require("bootstrap");
+// const { queue } = require("jquery");
 
 function inputjadwal(){
 //  get data
@@ -262,7 +262,7 @@ $.ajax(url, // request url
     {
    
         dataType: 'json', // type of response data
-        timeout: 500,     // timeout milliseconds
+        // timeout: 500,     // timeout milliseconds
         success: function (data,status,xhr) {   // success callback function
           data.data.forEach(element => {
             var id = element.id
@@ -278,7 +278,7 @@ var url = "/backend/data-divisi-ajax";
   $.ajax(url, // request url
       {
           dataType: 'json', // type of response data
-          timeout: 500,     // timeout milliseconds
+          // timeout: 500,     // timeout milliseconds
           success: function (data,status,xhr) {   // success callback function
             // alert(url);
             data.data.forEach(element => {
@@ -296,7 +296,7 @@ var url = "/backend/data-pegawai-ajax";
 $.ajax(url, // request url
     {
         dataType: 'json', // type of response data
-        timeout: 500,     // timeout milliseconds
+        // timeout: 500,     // timeout milliseconds
         success: function (data,status,xhr) {   // success callback function
           data.data.forEach(element => {
             var id = element.id
@@ -311,7 +311,7 @@ var url = "/backend/data-shift-ajax";
 $.ajax(url, // request url
     {
         dataType: 'json', // type of response data
-        timeout: 500,     // timeout milliseconds
+        // timeout: 500,     // timeout milliseconds
         success: function (data,status,xhr) {   // success callback function
           for (let i = 1; i < 5; i++) {
           data.data.forEach(element => {
@@ -336,7 +336,7 @@ function showDetail(type,tanggal) {
     {
    
         dataType: 'json', // type of response data
-        timeout: 500,     // timeout milliseconds
+        // timeout: 500,     // timeout milliseconds
         success: function (data,status,xhr) {   // success callback function
           // alert(data.msg);
           $("#modalContent").html(data.msg);

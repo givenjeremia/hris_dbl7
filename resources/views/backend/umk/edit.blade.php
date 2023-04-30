@@ -44,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Jumlah</label>
-                                        <input type="number" class="form-control" name="jumlah" required value="{{$row->data}}">
+                                        <input type="number" class="form-control" name="jumlah" required value="{{$row->nominal}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

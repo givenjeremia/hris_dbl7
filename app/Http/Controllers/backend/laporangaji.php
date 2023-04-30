@@ -68,7 +68,7 @@ class laporangaji extends Controller
     public function perhitunganGaji(){
         $tanggal_now = Carbon::now();
         // Get Data 
-        $pegawai = DB::table('pegpreawai')->get();
+        $pegawai = DB::table('pegawai')->get();
         $umk = DB::table('mastergajis')->where('keterangan','umk')->get(); // Role By Jabatan
         $tunjangan_keahlian = DB::table('pendapatans')->where('type','tunjangan keahlian')->get(); // Role By Divisi
         // Cek Apakah Bulan Ini Sudah Di Generate
@@ -235,5 +235,16 @@ class laporangaji extends Controller
     public function destroy($id)
     {
         //
+        // hapus pendapatan dan potongan 
+        $pendapatan = pendapatangaji::where('slug_id', $id)->get();
+        foreach ($pendapatan as $key => $value) {
+            # code...
+            if($value->keterangan == 'UMK'){
+                $p = DB::select(DB::raw('DELETE FROM `potongangajis` WHERE `pendapatangajis_id` = '.$value->id));
+            }
+        }
+        $p = DB::select(DB::raw('DELETE FROM `pendapatangajis` WHERE `slug_id` = '.$id));
+        $data = mastergaji::find($id);
+        $data->delete();
     }
 }

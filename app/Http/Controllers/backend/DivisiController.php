@@ -28,7 +28,6 @@ class DivisiController extends Controller
         ->crossJoin('new_jadwal_shifts as jd')
         ->select('divisi.*','jd.id as id_shift')
         ->get();
-        dd($data);
         return Datatables::of(DB::table('divisi')
         ->crossJoin('new_jadwal_shifts as jd')
         ->select('divisi.*','jd.id as id_shift')

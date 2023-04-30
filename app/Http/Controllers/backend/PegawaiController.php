@@ -33,9 +33,9 @@ class PegawaiController extends Controller
     public function listdataajax(){
         return Datatables::of(DB::table('pegawai')
         ->crossJoin('new_jadwal_shifts as jd')
-        ->leftjoin('divisi','divisi.id','=','pegawai.id_divisi')
-        ->leftjoin('jabatan','jabatan.id','=','pegawai.id_jabatan')
-        ->leftjoin('client','client.id','=','pegawai.id_kantor')
+        ->leftjoin('divisi','divisi.id','=','pegawai.divisi_id')
+        ->leftjoin('jabatan','jabatan.id','=','pegawai.jabatan_id')
+        ->leftjoin('client','client.id','=','pegawai.kantor_id')
         ->select('pegawai.*','divisi.nama as divisi','jabatan.nama as jabatan','client.nama as kantor','jd.id as id_shift')
         ->get())->make(true);
     }

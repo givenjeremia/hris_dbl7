@@ -51,7 +51,7 @@
                             <li><a href="{{url('backend/laporangaji')}}" class="dropdown-item">Laporan Gaji</a></li>
                             <li><a href="{{url('backend/umk')}}" class="dropdown-item">UMK</a></li>
                             <li><a href="{{url('backend/tunjangankeahlian')}}" class="dropdown-item">Tunjangan Keahlian</a></li>
-                            <li><a href="{{url('backend/tunjanganlamaberkerja')}}" class="dropdown-item">Tunjangan Lama Berkerja </a></li>
+                            {{-- <li><a href="{{url('backend/tunjanganlamaberkerja')}}" class="dropdown-item">Tunjangan Lama Berkerja </a></li> --}}
                     </ul>
             </li>
     

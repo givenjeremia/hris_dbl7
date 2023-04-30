@@ -28,7 +28,7 @@ function hapusdata(kode) {
             });
             $.ajax({
                 type: 'DELETE',
-                url: '/backend/jadwal/' + kode,
+                url: '/backend/laporangaji/' + kode,
                 data: {
                     '_token': $('input[name=_token]').val(),
                 },
@@ -38,30 +38,33 @@ function hapusdata(kode) {
                         'Your file has been deleted.',
                         'success'
                     )
-                    $('#list-data').DataTable().ajax.reload();
+                    getData()
                 }
             });
         }
     })
     }
-    window.hapusdata = hapusdata;
+    // window.hapusdata = hapusdata;
     ///////////// change name /////////
     // Get Data
-    var url2 = "/backend/laporangajiAjax";
-    $.ajax(url2, // request url
-    {
-        
-        dataType: 'json', // type of response data
-        timeout: 500,     // timeout milliseconds
-        success: function (data,status,xhr) {   // success callback function
-            //   alert(data);
+    function getData(){
 
-  
-              $('#table-laporan').html(data.msg);
-            //   alert(data);
-            GetDetail();
-            },
-    });
+        var url2 = "/backend/laporangajiAjax";
+        $.ajax(url2, // request url
+        {
+            
+            dataType: 'json', // type of response data   // timeout milliseconds
+            success: function (data,status,xhr) {   // success callback function
+                //   alert(data);
+    
+      
+                  $('#table-laporan').html(data.msg);
+                //   alert(data);
+                GetDetail();
+                },
+        });
+    }
+    getData()
    
     
     // Get Detail
@@ -75,7 +78,6 @@ function hapusdata(kode) {
             {
             
                 dataType: 'json', // type of response data
-                timeout: 500,     // timeout milliseconds
                 success: function (data,status,xhr) { 
                   // success callback function
                     data.data.forEach(element => {
@@ -148,8 +150,7 @@ function hapusdata(kode) {
         $.ajax(url, // request url
             {
             
-                dataType: 'json', // type of response data
-                timeout: 500,     // timeout milliseconds
+                dataType: 'json', // type of response data // timeout milliseconds
                 success: function (data,status,xhr) {   // success callback function
                     
               $('#table-laporan').html("");
@@ -169,7 +170,6 @@ function hapusdata(kode) {
             {
             
                 dataType: 'json', // type of response data
-                timeout: 500,     // timeout milliseconds
                 success: function (data,status,xhr) {   // success callback function
                 
                     if(data.status === 'oke'){

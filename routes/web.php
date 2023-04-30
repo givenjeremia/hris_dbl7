@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,6 +10,8 @@ Auth::routes();
 // Route::middleware(['auth'])->group(function () {
 Route::prefix('backend')->group(function () {
     Route::get('/home', 'backend\HomeController@index')->name('home');
+    Route::get('/detail-pegawai-terlambat','backend\HomeController@detailPegawaiTerlambat');
+
     Route::get('/edit-profile', 'backend\HomeController@editprofile')->name('editprofile');
     Route::post('/edit-profile/{id}', 'backend\HomeController@aksieditprofile');
 

@@ -121,7 +121,7 @@ class umkController extends Controller
      */
     public function edit($id)
     {
-        $check = mastergaji::where('type','umk')->where('role','all')->value('id');
+        $check = mastergaji::where('keterangan','umk')->where('role','all')->value('id');
         $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
         $data = mastergaji::where('id',$id)->get();
         return view('backend.umk.edit',compact('jabatan','check','data'));
@@ -141,9 +141,9 @@ class umkController extends Controller
             'role' => 'required',
         ]);
         mastergaji::where('id', $id)->update([
-            'data'=>$request->jumlah,
+            'nominal'=>$request->jumlah,
             'role'=>$request->role,
-            'type'=>'umk'
+            'keterangan'=>'umk'
         ]);
         return redirect('/backend/umk')->with('status','Sukses merubah data');
     }
