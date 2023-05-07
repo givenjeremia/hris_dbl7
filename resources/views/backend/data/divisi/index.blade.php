@@ -28,17 +28,24 @@
             {{ session('status') }}
         </div>
         @endif
+        @if (session('gagal'))
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>Info!</h4>
+            {{ session('gagal') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Data Divisi</h3>
                         <div class="card-tools">
-                            <a href="{{url('/backend/divisi/create')}}">
-                                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-plus"></i> Tambah
-                                    Data
-                                </button>
-                            </a>
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                data-target="#exampleModal">
+                                <i class="fas fa-plus"></i> Tambah
+                                Data
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -68,6 +75,43 @@
             </div>
         </div>
     </div><!-- /.container-fluid -->
+</div>
+
+<!-- Modal Tambah-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" onsubmit="return validasiinput();" role="form" enctype="multipart/form-data"
+                        action="{{url('/backend/divisi')}}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Divisi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nama</label>
+                        <input type="text" class="form-control" name="nama" required autofocus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- Modal Edit --}}
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+
+        </div>
+    </div>
 </div>
 @endsection
 

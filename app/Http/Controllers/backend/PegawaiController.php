@@ -77,7 +77,7 @@ class PegawaiController extends Controller
         DB::table('pegawai')->insert([
             'nama' => $request->nama,
             'tgl_lahir' => $tgl_lahir->format('Y-m-d'),
-            'alamat' => $request->alamat,
+        'alamat' => $request->alamat,
             'divisi_id' => $request->divisi,
             'jabatan_id' => $request->jabatan,
             'no_rekening' => $request->no_rekening,

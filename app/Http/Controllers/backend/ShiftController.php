@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
+use App\Shift;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ShiftController extends Controller
 {
@@ -38,7 +39,7 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        return view('backend.data.shift.create');
+
     }
 
     /**
@@ -55,12 +56,19 @@ class ShiftController extends Controller
             'jam_masuk' => 'required',
             'jam_pulang' => 'required'
         ]);
-        DB::table('shift')->insert([
-            'nama' => $request->nama,
-            'jam_masuk' => $request->jam_masuk,
-            'jam_pulang' => $request->jam_pulang,
-        ]);
-        return redirect('/backend/shift')->with('status','Sukses menyimpan data');
+        $check = Shift::where('nama',$request->nama)->where('jam_masuk',$request->jam_masuk)->where('jam_pulang', $request->jam_pulang)->get();
+        if(count($check) == 0){
+
+            DB::table('shift')->insert([
+                'nama' => $request->nama,
+                'jam_masuk' => $request->jam_masuk,
+                'jam_pulang' => $request->jam_pulang,
+            ]);
+            return redirect('/backend/shift')->with('status','Sukses menyimpan data');
+        }
+        else{
+            return redirect('/backend/shift')->with('gagal','Gagal menyimpan data');
+        }
     }
 
     /**
@@ -82,8 +90,7 @@ class ShiftController extends Controller
      */
     public function edit($id)
     {
-        $data = DB::table('shift')->where('id', $id)->get();
-        return view('backend.data.shift.edit', compact('data'));
+    
     }
 
     /**
@@ -100,12 +107,20 @@ class ShiftController extends Controller
             'jam_masuk' => 'required',
             'jam_pulang' => 'required'
         ]);
-        DB::table('shift')->where('id', $id)->update([
-            'nama' => $request->nama,
-            'jam_masuk' => $request->jam_masuk,
-            'jam_pulang' => $request->jam_pulang,
-        ]);
-        return redirect('/backend/shift')->with('status','Sukses merubah data');
+        $check = Shift::where('nama',$request->nama)->where('jam_masuk',$request->jam_masuk)->where('jam_pulang', $request->jam_pulang)->get();
+        if(count($check) == 0){
+
+            DB::table('shift')->where('id', $id)->update([
+                'nama' => $request->nama,
+                'jam_masuk' => $request->jam_masuk,
+                'jam_pulang' => $request->jam_pulang,
+            ]);
+            return redirect('/backend/shift')->with('status','Sukses merubah data');
+        }
+        else{
+            return redirect('/backend/shift')->with('gagal','Gagal merubah data');
+        }
+       
     }
 
     /**
@@ -118,4 +133,16 @@ class ShiftController extends Controller
     {
         DB::table('shift')->where('id', $id)->delete();
     }
+
+    public function getEditForm(Request $request){
+
+        $id = $request->get('id');
+        $shift = Shift::find($id);
+        // dd($shift);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('backend.data.shift.edit_modal', compact('shift'))->render()
+        ),200);
+    }
+
 }

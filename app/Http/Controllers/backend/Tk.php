@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\newshift;
 use App\pendapatan;
+
 class Tk extends Controller
 {
     /**
@@ -17,32 +18,18 @@ class Tk extends Controller
      */
     public function index()
     {
-        return view('backend.tk.index');
+
+
+        $divisi = DB::table('divisi')->orderby('nama', 'asc')->get();
+        return view('backend.tk.index', compact('divisi'));
     }
-    public function listdata(){
+    public function listdata()
+    {
         return Datatables::of(DB::table('pendapatans')
-        ->where('type','tunjangan keahlian')
-        ->join('divisi', 'pendapatans.role', '=', 'divisi.id')
-        ->select('pendapatans.*','divisi.nama as nama')
-        ->get())->make(true);
-        // $hari_ini = date("Y-m-d");
-        // $tgl_pertama = date("Y-m-01", strtotime($hari_ini));
-        //     $data_arry=range(1, 31);
-        //         $database = newshift::where('Ids',1)->where('date_start',$tgl_pertama)->select($data_arry)->get();
-              
-        //         foreach($database as $Database){
-        //             $databases = $Database;
-        //         }
-        //         $datacount = array_count_values($database->toArray()[0]);
-        //         if($datacount['libur'] == null){
-        //             $waktu_kerja_libur= 0;
-        //         }
-        //         elseif($datacount['libur'] != null){
-        //             $waktu_kerja_libur= $datacount['libur'];
-        //         }
-        //         $waktu_kerja = sizeof($databases);
-        //         return response()->json([   'jumlah libur'=>$waktu_kerja_libur,
-        //                                     'jumlah_masuk'=>$waktu_kerja  ], 200);
+            ->where('type', 'tunjangan keahlian')
+            ->join('divisi', 'pendapatans.role', '=', 'divisi.id')
+            ->select('pendapatans.*', 'divisi.nama as nama')
+            ->get())->make(true);
     }
     /**
      * Show the form for creating a new resource.
@@ -51,9 +38,6 @@ class Tk extends Controller
      */
     public function create()
     {
-        $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
-        $divisi = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
-        return view('backend.tk.create',compact('divisi'));
     }
 
     /**
@@ -64,16 +48,22 @@ class Tk extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'jumlah' => 'required',
             'role' => 'required',
         ]);
-        pendapatan::create([
-            'data'=>$request->jumlah,
-            'role'=>$request->role,
-            'type'=>'tunjangan keahlian'
-        ]);
-        return redirect('/backend/tunjangankeahlian')->with('status','Sukses menyimpan data');
+        $check = pendapatan::where('type', 'tunjangan keahlian')->where('role', $request->role)->get();
+        if (count($check) > 0) {
+            return redirect('/backend/tunjangankeahlian')->with('gagal', 'Gagal menyimpan data');
+        } else {
+            pendapatan::create([
+                'data' => $request->jumlah,
+                'role' => $request->role,
+                'type' => 'tunjangan keahlian'
+            ]);
+            return redirect('/backend/tunjangankeahlian')->with('status', 'Sukses menyimpan data');
+        }
     }
 
     /**
@@ -95,9 +85,6 @@ class Tk extends Controller
      */
     public function edit($id)
     {
-        $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
-        $data = pendapatan::where('id',$id)->get();
-        return view('backend.tk.edit',compact('jabatan','data'));
     }
 
     /**
@@ -113,12 +100,21 @@ class Tk extends Controller
             'jumlah' => 'required',
             'role' => 'required',
         ]);
-        pendapatan::where('id', $id)->update([
-            'data'=>$request->jumlah,
-            'role'=>$request->role,
-            'type'=>'tunjangan keahlian'
-        ]);
-        return redirect('/backend/tunjangankeahlian')->with('status','Sukses merubah data');
+        $pendapatan_check = pendapatan::find($id);
+        $role_now = $pendapatan_check->role;
+        $check = pendapatan::where('type', 'tunjangan keahlian')->where('role', $request->role)->get();
+        if($role_now == $request->role || count($check) == 0){
+            pendapatan::where('id', $id)->update([
+                'data' => $request->jumlah,
+                'role' => $request->role,
+                'type' => 'tunjangan keahlian'
+            ]);
+            return redirect('/backend/tunjangankeahlian')->with('status', 'Sukses merubah data');
+        }
+        else{
+            return redirect('/backend/tunjangankeahlian')->with('gagal', 'Gagal menyimpan data');
+
+        }
     }
 
     /**
@@ -130,5 +126,17 @@ class Tk extends Controller
     public function destroy($id)
     {
         pendapatan::where('id', $id)->delete();
+    }
+
+    public function getEditForm(Request $request)
+    {
+        // dd("Masuk");
+        $id = $request->get('id');
+        $tk = DB::table('pendapatans')->where('type', 'tunjangan keahlian')->where('id', $id)->get();
+        $divisi = DB::table('divisi')->orderby('nama', 'asc')->get();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => view('backend.tk.edit_modal', compact('tk', 'divisi'))->render()
+        ), 200);
     }
 }

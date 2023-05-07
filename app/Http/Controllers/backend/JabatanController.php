@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
+use App\jabatan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class JabatanController extends Controller
 {
@@ -35,7 +36,7 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        return view('backend.data.jabatan.create');
+        
     }
 
     /**
@@ -49,10 +50,17 @@ class JabatanController extends Controller
         $request->validate([
             'nama' => 'required'
         ]);
-        DB::table('jabatan')->insert([
-            'nama' => $request->nama
-        ]);
-        return redirect('/backend/jabatan')->with('status','Sukses menyimpan data');
+        $check = jabatan::where('nama', $request->nama)->get();
+        if(count($check) == 0) {
+            DB::table('jabatan')->insert([
+                'nama' => $request->nama
+            ]);
+            return redirect('/backend/jabatan')->with('status','Sukses menyimpan data');
+        }
+        else{
+            return redirect('/backend/jabatan')->with('gagal','Gagal menyimpan data');
+        }
+       
     }
 
     /**
@@ -74,8 +82,7 @@ class JabatanController extends Controller
      */
     public function edit($id)
     {
-        $data = DB::table('jabatan')->where('id', $id)->get();
-        return view('backend.data.jabatan.edit', compact('data'));
+
     }
 
     /**
@@ -90,10 +97,17 @@ class JabatanController extends Controller
         $request->validate([
             'nama' => 'required'
         ]);
-        DB::table('jabatan')->where('id', $id)->update([
-            'nama' => $request->nama
-        ]);
-        return redirect('/backend/jabatan')->with('status','Sukses merubah data');
+        $check = jabatan::where('nama', $request->nama)->get();
+        if(count($check) == 0) {
+            DB::table('jabatan')->where('id', $id)->update([
+                'nama' => $request->nama
+            ]);
+            return redirect('/backend/jabatan')->with('status','Sukses merubah data');
+        }
+        else{
+            return redirect('/backend/jabatan')->with('gagal','Gagal merubah data');
+        }
+       
     }
 
     /**
@@ -105,5 +119,16 @@ class JabatanController extends Controller
     public function destroy($id)
     {
         DB::table('jabatan')->where('id', $id)->delete();
+    }
+    public function getEditForm(Request $request){
+        // dd("Masuk");
+        $id = $request->get('id');
+        $jabatan = jabatan::find($id);
+
+        // dd($divisi);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('backend.data.jabatan.edit_modal', compact('jabatan'))->render()
+        ),200);
     }
 }

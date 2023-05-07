@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\devisi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,7 @@ class DivisiController extends Controller
      */
     public function create()
     {
-        return view('backend.data.divisi.create');
+
     }
 
     /**
@@ -54,10 +55,16 @@ class DivisiController extends Controller
         $request->validate([
             'nama' => 'required'
         ]);
-        DB::table('divisi')->insert([
-            'nama' => $request->nama
-        ]);
-        return redirect('/backend/divisi')->with('status','Sukses menyimpan data');
+        $check = devisi::where('nama', $request->nama)->get();
+        if(count($check) == 0){
+            DB::table('divisi')->insert([
+                'nama' => $request->nama
+            ]);
+            return redirect('/backend/divisi')->with('status','Sukses menyimpan data');
+        }
+        else{
+            return redirect('/backend/divisi')->with('gagal','Gagal menyimpan data');
+        }
     }
 
     /**
@@ -79,8 +86,7 @@ class DivisiController extends Controller
      */
     public function edit($id)
     {
-        $data = DB::table('divisi')->where('id', $id)->get();
-        return view('backend.data.divisi.edit', compact('data'));
+
     }
 
     /**
@@ -95,10 +101,17 @@ class DivisiController extends Controller
         $request->validate([
             'nama' => 'required'
         ]);
-        DB::table('divisi')->where('id', $id)->update([
-            'nama' => $request->nama
-        ]);
-        return redirect('/backend/divisi')->with('status','Sukses merubah data');
+        $check = devisi::where('nama', $request->nama)->get();
+        if(count($check) == 0){
+            DB::table('divisi')->where('id', $id)->update([
+                'nama' => $request->nama
+            ]);
+            return redirect('/backend/divisi')->with('status','Sukses merubah data');;
+        }
+        else{
+            return redirect('/backend/divisi')->with('gagal','Gagal merubah data');
+        }
+       
     }
 
     /**
@@ -110,5 +123,17 @@ class DivisiController extends Controller
     public function destroy($id)
     {
         DB::table('divisi')->where('id', $id)->delete();
+    }
+
+    public function getEditForm(Request $request){
+        // dd("Masuk");
+        $id = $request->get('id');
+        $divisi = devisi::find($id);
+
+        // dd($divisi);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('backend.data.divisi.edit_modal', compact('divisi'))->render()
+        ),200);
     }
 }

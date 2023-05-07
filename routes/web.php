@@ -28,14 +28,18 @@ Route::prefix('backend')->group(function () {
     Route::get('/data-pegawai-ajax','backend\PegawaiController@listdataajax');
 
     Route::resource('/divisi', 'backend\DivisiController');
+    Route::post('/divisi/getEditForm','backend\DivisiController@getEditForm')->name('divisi.getEditForm');
+
     Route::get('/data-divisi','backend\DivisiController@listdata');
     Route::get('/data-divisi-ajax','backend\DivisiController@listdataajax');
 
     Route::resource('/jabatan', 'backend\JabatanController');
+    Route::post('/jabatan/getEditForm','backend\JabatanController@getEditForm')->name('jabatan.getEditForm');
     Route::get('/data-jabatan','backend\JabatanController@listdata');
     Route::get('/data-jabatan-ajax','backend\JabatanController@listdataajax');
 
     Route::resource('/shift', 'backend\ShiftController');
+    Route::post('/shift/getEditForm','backend\ShiftController@getEditForm')->name('shift.getEditForm');
     Route::get('/data-shift','backend\ShiftController@listdata');
     Route::get('/data-shift-ajax','backend\ShiftController@listdataajax');
 
@@ -84,8 +88,9 @@ Route::prefix('backend')->group(function () {
 
     Route::resource('bpjs','backend\bpjskController');
     Route::resource('umk','backend\umkController');
+    Route::post('/umk/getEditForm','backend\umkController@getEditForm')->name('umk.getEditForm');
     Route::resource('tunjangankeahlian', 'backend\Tk');
-    Route::resource('tunjanganlamaberkerja', 'backend\Tlb');
+    Route::post('/tunjangankeahlian/getEditForm','backend\Tk@getEditForm')->name('tk.getEditForm');
     Route::resource('laporangaji','backend\laporangaji');
 
     // debug 

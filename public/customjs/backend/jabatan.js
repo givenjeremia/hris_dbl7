@@ -14,7 +14,8 @@ $(function () {
             { data: 'nama', name: 'nama' },
             {
                 render: function (data, type, row) {
-                    return '<a href="/backend/jabatan/' + row['id'] + '/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a> <button class="btn btn-danger" onclick="hapusdata(' + row['id'] + ')"><i class="fa fa-trash"></i></button>'
+                    return '<a href="#modalEdit" data-toggle="modal" onclick="getEditForm(' + row['id'] + ')"  class="btn btn-success" ><i class="fa fa-wrench"></i></a>'+
+                    '<button class="btn btn-danger" onclick="hapusdata(' + row['id'] + ')"><i class="fa fa-trash"></i></button>'
                 },
                 "className": 'text-center',
                 "orderable": false,
@@ -69,3 +70,18 @@ function hapusdata(kode) {
     })
 }
 window.hapusdata = hapusdata;
+
+function getEditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'/backend/jabatan/getEditForm',
+    data:{
+        '_token':$('meta[name="csrf-token"]').attr('content'),
+          'id':id
+         },
+    success: function(data){
+       $('#modalContent').html(data.msg)
+    }
+  });
+}

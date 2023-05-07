@@ -1,8 +1,4 @@
 
-let rupiah = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-});
 
 $(function () {
     $('#list-data').DataTable({
@@ -16,11 +12,20 @@ $(function () {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
-            { data: 'nominal', name: 'jumlah' },
+            {
+                render: function (data, type, row,meta) {
+                    const formattedNumber = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row['nominal']);
+                    return formattedNumber
+                },
+
+            },
+
             { data:'role', name:'role' },
             {
                 render: function (data, type, row) {
-                    return '<a href="/backend/umk/' + row['id'] + '/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a> <button class="btn btn-danger" onclick="hapusdata(' + row['id'] + ')"><i class="fa fa-trash"></i></button>'
+                    // return '<a href="/backend/umk/' + row['id'] + '/edit" class="btn btn-success"><i class="fa fa-wrench"></i></a> '+
+                    return '<a href="#modalEdit" data-toggle="modal" onclick="getEditForm(' + row['id'] + ')"  class="btn btn-success" ><i class="fa fa-wrench"></i></a>'+
+                    '<button class="btn btn-danger" onclick="hapusdata(' + row['id'] + ')"><i class="fa fa-trash"></i></button>'
                 },
                 "className": 'text-center',
                 "orderable": false,
@@ -75,3 +80,18 @@ function hapusdata(kode) {
     })
 }
 window.hapusdata = hapusdata;
+
+function getEditForm(id)
+{
+  $.ajax({
+    type:'POST',
+    url:'/backend/umk/getEditForm',
+    data:{
+        '_token':$('meta[name="csrf-token"]').attr('content'),
+          'id':id
+         },
+    success: function(data){
+       $('#modalContent').html(data.msg)
+    }
+  });
+}

@@ -32,7 +32,10 @@ class umkController extends Controller
      */
     public function index()
     {
-        return view('backend.umk.index');
+        $check = mastergaji::where('keterangan','umk')->where('role','all')->value('id');
+        $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
+        return view('backend.umk.index',compact('jabatan','check'));
+
     }
     public function listdata(){
         return Datatables::of(DB::table('mastergajis')->where('keterangan','umk')
@@ -90,16 +93,24 @@ class umkController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'jumlah' => 'required',
             'role' => 'required',
         ]);
-        mastergaji::create([
-            'nominal'=>$request->jumlah,
-            'role'=>$request->role,
-            'keterangan'=>'umk'
-        ]);
-        return redirect('/backend/umk')->with('status','Sukses menyimpan data');
+        $check = mastergaji::where('keterangan','umk')->where('role',$request->role)->get();
+        if(count($check) == 0){
+
+            mastergaji::create([
+                'nominal'=>$request->jumlah,
+                'role'=>$request->role,
+                'keterangan'=>'umk'
+            ]);
+            return redirect('/backend/umk')->with('status','Sukses menyimpan data');
+        }
+        else{
+            return redirect('/backend/umk')->with('gagal','Gagal menyimpan data');
+        }
     }
 
     /**
@@ -140,12 +151,21 @@ class umkController extends Controller
             'jumlah' => 'required',
             'role' => 'required',
         ]);
-        mastergaji::where('id', $id)->update([
-            'nominal'=>$request->jumlah,
-            'role'=>$request->role,
-            'keterangan'=>'umk'
-        ]);
-        return redirect('/backend/umk')->with('status','Sukses merubah data');
+        $umk_check = mastergaji::find($id);
+        $role_now = $umk_check->role;
+        $check = mastergaji::where('keterangan', 'umk')->where('role', $request->role)->get();
+        if($role_now == $request->role || count($check) == 0){
+
+            mastergaji::where('id', $id)->update([
+                'nominal'=>$request->jumlah,
+                'role'=>$request->role,
+                'keterangan'=>'umk'
+            ]);
+            return redirect('/backend/umk')->with('status','Sukses merubah data');
+        }
+        else{
+            return redirect('/backend/umk')->with('gagal','Gagal merubah data');
+        }
     }
 
     /**
@@ -157,5 +177,18 @@ class umkController extends Controller
     public function destroy($id)
     {
         DB::table('mastergajis')->where('id', $id)->delete();
+    }
+
+    public function getEditForm(Request $request){
+        // dd("Masuk");
+        $id = $request->get('id');
+        $umk_data = mastergaji::where('keterangan','umk')->where('id',$id)->get();
+        $check = mastergaji::where('keterangan','umk')->where('role','all')->value('id');
+        $jabatan = DB::table('jabatan')->whereNotIn('nama', ['all'])->orderby('nama','asc')->get();
+        // dd($umk);
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>view('backend.umk.edit_modal', compact('umk_data','check','jabatan'))->render()
+        ),200);
     }
 }
