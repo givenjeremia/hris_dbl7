@@ -55,6 +55,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Tujangan</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -65,6 +66,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Tujangan</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -95,6 +97,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama</label>
                         <input type="text" class="form-control" name="nama" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tunjangan</label>
+                        <input type="number" class="form-control" name="tunjangan" required autofocus>
                     </div>
                 </div>
                 <div class="modal-footer">

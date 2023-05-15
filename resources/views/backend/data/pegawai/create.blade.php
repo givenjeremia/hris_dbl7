@@ -75,16 +75,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Jabatan</label>
-                                        <select name="jabatan" id="" class="form-control" required>
-                                            @foreach($jabatans as $row)
-                                                <option value="{{$row->id}}">{{$row->nama}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                            
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">No Rekening</label>
@@ -99,8 +90,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">password</label>
-                                        <input type="text" class="form-control" name="password" required>
+                                        <label for="exampleInputEmail1">Password</label>
+                                        <input type="password" class="form-control" name="password" required>
                                     </div>
                                 </div>
                             </div>

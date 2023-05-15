@@ -16,6 +16,7 @@ class Devisi extends Migration
         Schema::create('divisi', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->integer('nominal_tunjangan')->nullable();;
         });
     }
 

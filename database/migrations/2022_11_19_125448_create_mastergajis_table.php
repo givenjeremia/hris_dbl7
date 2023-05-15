@@ -13,13 +13,13 @@ class CreateMastergajisTable extends Migration
      */
     public function up()
     {
-        Schema::create('mastergajis', function (Blueprint $table) {
-            $table->id();
-            $table->integer('nominal')->nullable();;
-            $table->longtext('keterangan')->nullable();
-            $table->string('role')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('mastergajis', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->integer('nominal')->nullable();;
+        //     $table->longtext('keterangan')->nullable();
+        //     $table->string('role')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -29,6 +29,6 @@ class CreateMastergajisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mastergajis');
+        // Schema::dropIfExists('mastergajis');
     }
 }

@@ -15,9 +15,8 @@ class CreatePendapatansTable extends Migration
     {
         Schema::create('pendapatans', function (Blueprint $table) {
             $table->id();
-            $table->string('data')->nullable();
-            $table->string('type')->nullable();
-            $table->string('role')->nullable();
+            $table->integer('nominal')->nullable();
+            $table->tinyInteger('status')->unsigned();
             $table->timestamps();
         });
     }

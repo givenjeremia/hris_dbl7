@@ -53,12 +53,15 @@ class DivisiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required'
+            'nama' => 'required',
+            'tunjangan' => 'required'
         ]);
         $check = devisi::where('nama', $request->nama)->get();
         if(count($check) == 0){
             DB::table('divisi')->insert([
-                'nama' => $request->nama
+                'nama' => $request->nama,
+                'nominal_tunjangan' => $request->tunjangan
+
             ]);
             return redirect('/backend/divisi')->with('status','Sukses menyimpan data');
         }
@@ -99,12 +102,15 @@ class DivisiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required'
+            'nama' => 'required',
+            'tunjangan' => 'required',
         ]);
         $check = devisi::where('nama', $request->nama)->get();
         if(count($check) == 0){
             DB::table('divisi')->where('id', $id)->update([
-                'nama' => $request->nama
+                'nama' => $request->nama,
+                'nominal_tunjangan' => $request->tunjangan
+
             ]);
             return redirect('/backend/divisi')->with('status','Sukses merubah data');;
         }

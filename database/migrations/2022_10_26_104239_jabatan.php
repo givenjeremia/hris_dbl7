@@ -11,6 +11,7 @@ class Jabatan extends Migration
         Schema::create('jabatan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->integer('nominal_gaji')->nullable();;
         });
     }
 

@@ -16,9 +16,9 @@ class CreatePotongangajisTable extends Migration
         Schema::create('potongangajis', function (Blueprint $table) {
             $table->id();
             // $table->string('id_user');
-            $table->string('data')->nullable();
-            $table->string('type')->nullable();
-            $table->string('slug_id')->nullable();
+            $table->integer('nominal')->nullable();
+            $table->string('keterangan')->nullable();
+            // $table->string('slug_id')->nullable();
             // $table->string('pendapatan_id')->nullable();
             $table->timestamps();
         });

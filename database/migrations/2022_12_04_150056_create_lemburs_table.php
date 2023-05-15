@@ -17,10 +17,7 @@ class CreateLembursTable extends Migration
             $table->id();
             $table->date('tanggal')->nullable();
             $table->string('keterangan')->nullable();
-
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
-            
+            $table->string('status');
             $table->timestamps();
         });
     }

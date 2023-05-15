@@ -15,10 +15,10 @@ class AddPendapatangajisColumn extends Migration
     {
         //
 
-        Schema::table('potongangajis' , function(Blueprint $table){
-            $table->unsignedBigInteger('pendapatangajis_id')->nullable();
-            $table->foreign('pendapatangajis_id')->references('id')->on('pendapatangajis');
-        });
+        // Schema::table('potongangajis' , function(Blueprint $table){
+        //     $table->unsignedBigInteger('pendapatangajis_id')->nullable();
+        //     $table->foreign('pendapatangajis_id')->references('id')->on('pendapatangajis');
+        // });
         
     }
 
@@ -30,10 +30,10 @@ class AddPendapatangajisColumn extends Migration
     public function down()
     {
         //
-        Schema::table('potongangajis' , function (Blueprint $table){
-            $table->dropForeign(['pendapatangajis_id']);
-            $table->dropColumn('pendapatangajis_id');
-        });
+        // Schema::table('potongangajis' , function (Blueprint $table){
+        //     $table->dropForeign(['pendapatangajis_id']);
+        //     $table->dropColumn('pendapatangajis_id');
+        // });
 
     }
 }

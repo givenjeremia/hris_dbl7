@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class Pegawai extends Migration
-{public function up()
+{
+    public function up()
     {
         Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
@@ -13,8 +14,6 @@ class Pegawai extends Migration
             $table->string('tgl_lahir');
             $table->string('alamat');
             $table->string('no_rekening');
-            // $table->string('id_divisi');
-            // $table->string('id_jabatan');
         });
     }
 

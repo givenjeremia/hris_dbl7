@@ -14,6 +14,11 @@
                 <input type="text" class="form-control" name="nama" value="{{$divisi->nama}}"
                     required autofocus>
             </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tunjangan</label>
+                <input type="number" class="form-control" name="tunjangan" value="{{$divisi->nominal_tunjangan}}"
+                    required autofocus>
+            </div>
         </div>
 
 

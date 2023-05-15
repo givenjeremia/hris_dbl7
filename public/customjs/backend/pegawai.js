@@ -18,7 +18,6 @@ $(function () {
             }, name: 'tgl_lahir' },
             { data: 'alamat', name: 'alamat' },
             { data: 'divisi', name: 'divisi' },
-            { data: 'jabatan', name: 'jabatan' },
             { data: 'no_rekening', name: 'no_rekening' },
             { data: 'kantor', name: 'kantor' },
             {

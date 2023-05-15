@@ -14,6 +14,20 @@
                 <input type="text" class="form-control" name="nama" value="{{$jabatan->nama}}"
                     required autofocus>
             </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Gaji</label>
+                <input type="number" class="form-control" name="gaji" value="{{$jabatan->nominal_gaji}}"
+                    required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Divisi</label>
+                <select name="divisi_id" class="form-control">
+                    @foreach ($divisi as $item)
+                    <option value="{{ $item->id  }}" {{ $item->id == $jabatan->divisi_id ? 'selected' :'' }} >{{ $item->nama }}</option>
+                        
+                    @endforeach
+                </select>
+            </div>
         </div>
 
 

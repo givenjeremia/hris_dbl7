@@ -13,14 +13,14 @@ class CreatePendapatangajisTable extends Migration
      */
     public function up()
     {
-        Schema::create('pendapatangajis', function (Blueprint $table) {
-            $table->id();
-            // $table->string('id_user');
-            $table->integer('nomimal')->nullable();
-            $table->longtext('keterangan')->nullable();
-            $table->string('slug_id')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('pendapatangajis', function (Blueprint $table) {
+        //     $table->id();
+        //     // $table->string('id_user');
+        //     $table->integer('nomimal')->nullable();
+        //     $table->longtext('keterangan')->nullable();
+        //     $table->string('slug_id')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -30,6 +30,6 @@ class CreatePendapatangajisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pendapatangajis');
+        // Schema::dropIfExists('pendapatangajis');
     }
 }

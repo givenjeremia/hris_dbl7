@@ -14,10 +14,10 @@ class AddPendapatansidColumn extends Migration
     public function up()
     {
         //
-        Schema::table('roles' , function(Blueprint $table){
-            $table->unsignedBigInteger('pendapatans_id')->nullable();
-            $table->foreign('pendapatans_id')->references('id')->on('pendapatans');
-        });
+        // Schema::table('roles' , function(Blueprint $table){
+        //     $table->unsignedBigInteger('pendapatans_id')->nullable();
+        //     $table->foreign('pendapatans_id')->references('id')->on('pendapatans');
+        // });
 
         // Schema::table('pegawai' , function(Blueprint $table){
         //     $table->unsignedBigInteger('pendapatans_id')->nullable();

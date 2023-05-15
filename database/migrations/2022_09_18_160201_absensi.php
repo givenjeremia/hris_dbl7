@@ -35,7 +35,7 @@ class Absensi extends Migration
             $table->string('lokasi_masuk')->nullable();
             $table->string('lokasi_pulang')->nullable();
             $table->string('status')->nullable($value = true);
-            // $table->string('keterangan')->nullable($value = true);
+            $table->string('keterangan')->nullable($value = true);
             // $table->string('id_pegawai')->nullable($value = true);
             // $table->string('id_client')->nullable($value = true);
             $table->timestamps();

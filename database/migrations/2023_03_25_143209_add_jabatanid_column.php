@@ -14,10 +14,10 @@ class AddJabatanidColumn extends Migration
     public function up()
     {
         //
-            Schema::table('pegawai' , function(Blueprint $table){
-            $table->unsignedBigInteger('jabatan_id')->nullable();
-            $table->foreign('jabatan_id')->references('id')->on('jabatan');
-        });
+        //     Schema::table('pegawai' , function(Blueprint $table){
+        //     $table->unsignedBigInteger('jabatan_id')->nullable();
+        //     $table->foreign('jabatan_id')->references('id')->on('jabatan');
+        // });
 
     }
 
@@ -29,9 +29,9 @@ class AddJabatanidColumn extends Migration
     public function down()
     {
         //
-        Schema::table('pegawai' , function (Blueprint $table){
-            $table->dropForeign(['jabatan_id']);
-            $table->dropColumn('jabatan_id');
-        });
+        // Schema::table('pegawai' , function (Blueprint $table){
+        //     $table->dropForeign(['jabatan_id']);
+        //     $table->dropColumn('jabatan_id');
+        // });
     }
 }

@@ -18,6 +18,14 @@ class AddDivisiidColumn extends Migration
             $table->unsignedBigInteger('divisi_id')->nullable();
             $table->foreign('divisi_id')->references('id')->on('divisi');
         });
+        Schema::table('new_jadwal_shifts' , function(Blueprint $table){
+            $table->unsignedBigInteger('divisi_id')->nullable();
+            $table->foreign('divisi_id')->references('id')->on('divisi');
+        });
+        Schema::table('jabatan' , function(Blueprint $table){
+            $table->unsignedBigInteger('divisi_id')->nullable();
+            $table->foreign('divisi_id')->references('id')->on('divisi');
+        });
     }
 
     /**
@@ -28,6 +36,10 @@ class AddDivisiidColumn extends Migration
     public function down()
     {
         //
+        Schema::table('new_jadwal_shifts' , function (Blueprint $table){
+            $table->dropForeign(['divisi_id']);
+            $table->dropColumn('divisi_id');
+        });
         Schema::table('pegawai' , function (Blueprint $table){
             $table->dropForeign(['divisi_id']);
             $table->dropColumn('divisi_id');
