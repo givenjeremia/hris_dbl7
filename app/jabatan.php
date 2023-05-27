@@ -11,4 +11,9 @@ class jabatan extends Model
         'nama',
         'id',
     ];
+    public function divisi()
+    {
+        return $this->belongsTo('App\devisi','divisi_id');
+    }
+
 }

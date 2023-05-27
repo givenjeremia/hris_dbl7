@@ -66,6 +66,9 @@
                                                 <a  href="{{url('/backend/client/create')}}" class="btn btn-app">
                                                     <i class="fa fa-building"></i> Add Client
                                                 </a>
+                                                <a  href="{{url('/backend/client/create')}}" class="btn btn-app">
+                                                    <i class="fa fa-building"></i> Add Lembur
+                                                </a>
                                             </div>
 
                                         </div>
@@ -214,7 +217,7 @@
 
                         <div class="small-box bg-green">
                             <div class="inner">
-                                <h3>{{ $lembur_pending }}</h3>
+                                <h3></h3>
                                 <p>Pemohonan Lembur Tertunda</p>
                             </div>
                             <div class="icon">

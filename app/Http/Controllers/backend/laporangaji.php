@@ -3,8 +3,16 @@
 namespace App\Http\Controllers\backend;
 
 // use DB;
+use App\bpjs;
+use App\Absen;
+use App\cutis;
+use App\devisi;
+use App\lembur;
+use App\jabatan;
+use App\pegawai;
 use Carbon\Carbon;
 use App\mastergaji;
+use App\pendapatan;
 use App\potongangaji;
 use App\pendapatangaji;
 use Illuminate\Http\Request;
@@ -21,19 +29,21 @@ class laporangaji extends Controller
      */
     public function index()
     {
-        $data = mastergaji::whereNotIn('keterangan',['umk'])->get();
+        // $data = mastergaji::whereNotIn('keterangan',['umk'])->get();
         
-        return view('backend.laporangaji.index',compact('data'));
+        return view('backend.laporangaji.index');
     }
 
     public function indexAjax()
     {
-        $data = mastergaji::whereNotIn('keterangan',['umk'])->get();
-        // dd($data);
-        // dd($data);
+
+        $data = pendapatan::all();
+        $gaji = new pendapatan();
+        $gaji = $gaji->showGaji($data);
+        // dd($gaji);
         return response()->json(array(
             'status' => 'oke',
-            'msg' => view('backend.laporangaji.table',compact('data'))->render()
+            'msg' => view('backend.laporangaji.table',compact('gaji'))->render()
         ), 200);
         // return Datatables::of($data)->make(true);
     }
@@ -57,107 +67,144 @@ class laporangaji extends Controller
     
     public function listdatabymonth($month) {
         $params = $month.'%';
-        $data = mastergaji::whereDate('created_at', 'like',$params)->whereNotIn('keterangan',['umk'])->get();
-        // dd($data);
+        // dd($params);
+        $data = pendapatan::whereDate('created_at', 'like',$params)->get();
+        $gaji = new pendapatan();
+        $gaji = $gaji->showGaji($data);
+
         return response()->json(array(
             'status' => 'oke',
-            'msg' => view('backend.laporangaji.table',compact('data'))->render()
+            'msg' => view('backend.laporangaji.table',compact('gaji'))->render()
         ), 200);
     }
 
     public function perhitunganGaji(){
         $tanggal_now = Carbon::now();
         // Get Data 
-        $pegawai = DB::table('pegawai')->get();
-        $umk = DB::table('mastergajis')->where('keterangan','umk')->get(); // Role By Jabatan
-        $tunjangan_keahlian = DB::table('pendapatans')->where('type','tunjangan keahlian')->get(); // Role By Divisi
+        $pegawai = pegawai::all();
+        $divisi = devisi::all();
+        
         // Cek Apakah Bulan Ini Sudah Di Generate
         $params = Carbon::now()->year.'-'.Carbon::now()->format('m').'%';
-        $data = mastergaji::whereDate('created_at', 'like',$params)->whereNotIn('keterangan',['umk'])->get();
-        // dd($data);
+        $data = pendapatan::whereDate('created_at', 'like',$params)->get();
+        // dd($params);
+        // dd(count($data));
         if(count($data) == 0){
             foreach ($pegawai as $key => $value) {
+                // Get Data Pegawai 
                 $id_pegawai = $value->id;
-                $id_divisi = $value->divisi_id;
                 $id_jabatan = $value->jabatan_id;
-                $umk_nominal = 0;
-                $tk_nominal = 0;
-                $tlb_nominal = 0;
-                $potongan_gaji = 0;
-                // Get UMK
-                foreach ($umk as $item) {
-                    if($item->role == $id_jabatan){
-                        $umk_nominal = $item->nominal;
-                    }
-                }
+
+                // Get UMK 
+                $jabatan = jabatan::where('id', $id_jabatan)->first();
+                $umk_nominal = $jabatan->nominal_gaji;
+
+                // Set Upah per Hari
+                $upah_per_hari = $umk_nominal / 25;
+
                 // Get TK
-                foreach ($tunjangan_keahlian as $item) {
-                    if($item->role == $id_divisi){
-                        $tk_nominal  = $item->data;
-                    }
-                }
-                // Get TLB By Month
+                $id_divisi = $jabatan->divisi_id;
+                $divisi = devisi::where('id', $id_divisi)->first();
+                $tk_nominal = $divisi->nominal_tunjangan;
+
+                // Get TLB
                 $tanggal_gabung = Carbon::parse($value->created_at);
                 $lama_kerja = $tanggal_gabung->diffInMonths($tanggal_now);
                 $tlb_nominal = $lama_kerja * 5000;
-                // Get BPJS
-                $bpjs_nominal = ($umk_nominal * 0.01) + ($umk_nominal * 0.01) + ($umk_nominal * 0.01);
-                // Potongan Gaji By Absen
+
+                // Get Lembur
+                $total_jam_lembur = 0;
+                $lembur = lembur::whereDate('tanggal', 'like',$params)->get();
+                $upah_lembur_per_jam = 1.5 * $umk_nominal * 0.000578;
+                foreach ($lembur as $item) {
+                    $total_jam_lembur = $total_jam_lembur + $item->lama_lembur;
+                }
+                $lembur_nominal = $total_jam_lembur * $upah_lembur_per_jam;
+                
+                
+                // Get Potongan BPJS
+                $bpjs  = bpjs::all();
+                $bpjs_ht = $bpjs[0]->bpjs_ht / 100;
+                $bpjs_kes = $bpjs[0]->bpjs_kes / 100;
+                $bpjs_tk = $bpjs[0]->bpjs_tk / 100;
+                $potongan_bpjs = ($umk_nominal  * $bpjs_ht) + ($umk_nominal  * $bpjs_kes) + ($umk_nominal  * $bpjs_tk);
+                
+                // Get Potongan Gaji (Absensi)
+                $count_terlambat = count(Absen::whereDate('date', 'like',$params)->where('status','Telat')->get());
+                $count_masuk = count(Absen::whereDate('date', 'like',$params)->where('status','Tepat Waktu')->get());
+                $potongan_absensi = 0;
+                if($count_terlambat > 3  || $count_terlambat <= 8 ){
+                    $potongan_absensi = $upah_per_hari * 1;
+                }
+                else if($count_terlambat > 8  || $count_terlambat <= 12){
+                    $potongan_absensi = $upah_per_hari * 2;
+                }
+                else if ($count_terlambat > 12 || $count_terlambat <= 16){
+                    $potongan_absensi = $upah_per_hari * 3;
+                }
+                else if ($count_terlambat > 16 || $count_terlambat <= 20){
+                    $potongan_absensi = $upah_per_hari * 4;
+                }
+                else if ($count_terlambat > 20 || $count_terlambat <= 24){
+                    $potongan_absensi = $upah_per_hari * 5;
+                }
+                else{
+                    $potongan_absensi = $upah_per_hari * 6;
+                }
+
+                // Get Potongan Gaji (Cutis)
+                $jatah_cuti_satu_tahun  = 12;
+                $tahun_now = Carbon::now()->year.'%';
+                $cutis = cutis::whereDate('mulai','like',$tahun_now)->whereDate('akhir','like',$tahun_now)->where('pegawai_id',$id_pegawai)->get();
+                foreach ($cutis as $data){
+                    $tanggal_mulai = Carbon::parse($data->mulai);
+                    $tanggal_akhir = Carbon::parse($data->akhir);
+                    $jatah_cuti_satu_tahun = $jatah_cuti_satu_tahun - $tanggal_mulai->diffInMonths($tanggal_akhir);
+                }
+                $potongan_cuti = 0;
+                if($jatah_cuti_satu_tahun < 0){
+                    $potongan_cuti = $upah_per_hari * abs($jatah_cuti_satu_tahun);
+                }
+
+                $potongan_gaji = $potongan_absensi + $potongan_cuti;
 
 
-                $total_gaji = ($umk_nominal + $tk_nominal + $tlb_nominal)-($bpjs_nominal);
-                // Add To Database
-                // / To Master Gaji
-                $master_gaji_insert = new mastergaji();
-                $master_gaji_insert->nominal = $total_gaji;
-                $master_gaji_insert->role = $id_pegawai;
-                $master_gaji_insert->keterangan = "gaji bersih";
-                $master_gaji_insert->save();
-                $id_master_gaji_insert = $master_gaji_insert->id;
+                // Set Total Gaji Variable
+                $total_gaji_bersih = ( $umk_nominal + $tlb_nominal + $tk_nominal + $lembur_nominal ) - ( $potongan_bpjs + $potongan_gaji);
+                // dd($total_gaji_bersih);
+                // Upload To Database
 
-                // / To Pendapatan
-                $pendapatan_gaji_by_tk = new pendapatangaji();
-                $pendapatan_gaji_by_tk->nomimal = $tk_nominal;
-                $pendapatan_gaji_by_tk->keterangan = "tunjangan keahlian";
-                $pendapatan_gaji_by_tk->slug_id = $id_master_gaji_insert;
-                $pendapatan_gaji_by_tk->pegawai_id = $id_pegawai;
-                $pendapatan_gaji_by_tk->save();
+                // Potongan Gaji
+                $potongan_gaji_by_gaji = new potongangaji();
+                $potongan_gaji_by_gaji->nominal = $potongan_gaji;
+                $potongan_gaji_by_gaji->keterangan = "gaji";
+                $potongan_gaji_by_gaji->save();
+                $id_potongan_gaji = $potongan_gaji_by_gaji->id;
 
-                $pendapatan_gaji_by_tlb = new pendapatangaji();
-                $pendapatan_gaji_by_tlb->nomimal= $tlb_nominal;
-                $pendapatan_gaji_by_tlb->keterangan = "tunjangan lama berkerja";
-                $pendapatan_gaji_by_tlb->slug_id = $id_master_gaji_insert;
-                $pendapatan_gaji_by_tlb->pegawai_id = $id_pegawai;
-                $pendapatan_gaji_by_tlb->save();
-
-                $pendapatan_gaji_by_umk = new pendapatangaji();
-                $pendapatan_gaji_by_umk->nomimal = $umk_nominal;
-                $pendapatan_gaji_by_umk->keterangan = "UMK";
-                $pendapatan_gaji_by_umk->slug_id = $id_master_gaji_insert;
-                $pendapatan_gaji_by_umk->pegawai_id = $id_pegawai;
-                $pendapatan_gaji_by_umk->save();
-                $id_pendapatan_gaji_by_umk = $pendapatan_gaji_by_umk->id;
-
-                // / To Potongan Gaji
+                // Potongan Gaji BPJS 
                 $potongan_gaji_by_bpjs = new potongangaji();
-                $potongan_gaji_by_bpjs->data = $bpjs_nominal;
-                $potongan_gaji_by_bpjs->type = "bpjs";
-                $potongan_gaji_by_bpjs->pendapatangajis_id =  $id_pendapatan_gaji_by_umk;
+                $potongan_gaji_by_bpjs->nominal = $potongan_bpjs;
+                $potongan_gaji_by_bpjs->keterangan = "bpjs";
                 $potongan_gaji_by_bpjs->save();
+                $id_potongan_bpjs = $potongan_gaji_by_bpjs->id;
 
-                $potongan_gaji_by_potongan = new potongangaji();
-                $potongan_gaji_by_potongan->data = $potongan_gaji;
-                $potongan_gaji_by_potongan->type = "potongan gaji";
-                $potongan_gaji_by_potongan->pendapatangajis_id =  $id_pendapatan_gaji_by_umk;
-                $potongan_gaji_by_potongan->save();
-
-                // dd($total_gaji);
-
+                // Pendapatan
+                $pendapatan = new pendapatan();
+                $pendapatan->nominal = $total_gaji_bersih;
+                $pendapatan->nominal_tlb  = $tlb_nominal;
+                $pendapatan->nominal_lembur = $lembur_nominal;
+                $pendapatan->status = 0;
+                $pendapatan->potongangajis_id = $id_potongan_gaji;
+                $pendapatan->potonganbpjs_id = $id_potongan_bpjs;
+                $pendapatan->pegawai_id = $id_pegawai;
+                $pendapatan->save();
             }
-            $data = mastergaji::whereNotIn('keterangan',['umk'])->get();
+            $pendapatan = pendapatan::all();
+        $gaji = new pendapatan();
+        $gaji = $gaji->showGaji($pendapatan);
         return response()->json(array(
             'status' => 'oke',
-            'msg' => view('backend.laporangaji.table',compact('data'))->render()
+            'msg' => view('backend.laporangaji.table',compact('gaji'))->render()
         ), 200);
 
 

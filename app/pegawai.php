@@ -11,4 +11,5 @@ class pegawai extends Model
         'nama',
         'id',
     ];
+
 }

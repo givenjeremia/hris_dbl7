@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">lembur</h1>
+                <h1 class="m-0 text-dark">Lembur</h1>
             </div>
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -41,7 +41,12 @@
                     <div class="card-header">
                         <h3 class="card-title">Data lembur</h3>
                         <div class="card-tools">
-                         
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                data-target="#exampleModal">
+                                <i class="fas fa-plus"></i> Tambah
+                                Data
+                            </button>
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -52,26 +57,37 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pegawai</th>
-                                        <th>keterangan </th>
-                                        <th>tanggal</th>
-                                        <th>Mulai</th>
-                                        <th>Akhir</th>
-                                        <th >Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Lama Lembur</th>
+                                        <th>Keterangan</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tbody>
+                                        @foreach ($lembur as $key => $row)
+                                        <tr>
+                                            <td>{{$key+1}}</td>
+                                            <td>{{ $row->pegawai->nama }}</td>
+                                            <td>{{ date("j F Y", strtotime($row->tanggal)) }}</td>
+                                            <td>{{ $row->lama_lembur }}</td>
+                                            <td>{{ $row->keterangan }}</td>
+                                            <td>
+                                                <a href="#modalEdit" data-toggle="modal" onclick="getEditForm(' + row['id'] + ')"  class="btn btn-success" ><i class="fa fa-wrench"></i></a>
+                                                <button class="btn btn-danger" onclick="hapusdata(' + row['id'] + ')"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pegawai</th>
-                                        <th>keterangan </th>
-                                        <th>tanggal</th>
-                                        <th>Mulai</th>
-                                        <th>Akhir</th>
-                                        <th>Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Lama Lembur</th>
+                                        <th>Keterangan</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -83,6 +99,14 @@
         </div>
     </div><!-- /.container-fluid -->
 </div>
+
+{{-- Tambah Lembur --}}
+@include('backend/lembur/modal_create')
+<!-- Modal -->
+                            <!-- Button trigger modal -->
+<!-- Modal Tambah-->
+
+{{-- Edit Lembur --}}
 
 @endsection
 

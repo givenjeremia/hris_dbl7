@@ -31,12 +31,12 @@ class HomeController extends Controller
     {
        $date_now = Carbon::now()->toDateString();
        $cuti_pending = count(DB::table('cutis')->where('status','pending')->get());
-       $lembur_pending = count(DB::table('lemburs as l')
-       ->where('status','Diterima')
-       ->leftjoin('pegawai as p','l.pegawai_id','=','p.id')
-       ->select('l.*','p.nama as nama')
-       ->orwhere('status','Ditolak')
-       ->get());
+    //    $lembur_pending = count(DB::table('lemburs as l')
+    //    ->where('status','Diterima')
+    //    ->leftjoin('pegawai as p','l.pegawai_id','=','p.id')
+    //    ->select('l.*','p.nama as nama')
+    //    ->orwhere('status','Ditolak')
+    //    ->get());
        $pegawai_terlambat = DB::table('absensi')
                     ->join('pegawai', 'absensi.pegawai_id', '=', 'pegawai.id')
                     ->join('client', 'absensi.client_id', '=', 'client.id')
@@ -76,7 +76,7 @@ class HomeController extends Controller
 
         return view('backend.dashboard.index',[
             'cuti_pending'=>$cuti_pending,
-            'lembur_pending'=>$lembur_pending ,
+            // 'lembur_pending'=>$lembur_pending ,
     
             'count_pegawai_terlambat'=> count($pegawai_terlambat),
             'jadwal_shift_today' => $detail_shift

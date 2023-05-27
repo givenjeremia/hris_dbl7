@@ -5,7 +5,6 @@ function formatRupiah(number) {
 
 
 
-
 function hapusdata(kode) {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -62,8 +61,9 @@ function hapusdata(kode) {
     
       
                   $('#table-laporan').html(data.msg);
+                  $('#list-data').DataTable();
                 //   alert(data);
-                GetDetail();
+                // GetDetail();
                 },
         });
     }
@@ -71,78 +71,7 @@ function hapusdata(kode) {
    
     
     // Get Detail
-    function GetDetail() {
-        var url = "/backend/datalist-lg";
-        let rupiah = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-        });
-        $.ajax(url, // request url
-            {
-            
-                dataType: 'json', // type of response data
-                success: function (data,status,xhr) { 
-                  // success callback function
-                    data.data.forEach(element => {
-    
-                 
-                        if(element.nama_pg ==='UMK'){
-                            var id = element.id
-                            var datas= element.data_pg
-                            var data =`${rupiah.format(datas)}`
-                            $('#umk_'+id+'').html(data)  
-                        }
-                        else if(element.nama_pg ==='tunjangan keahlian'){
-                            var id = element.id
-                            var datas= element.data_pg
-                            var data =`${rupiah.format(datas)}`
-                            $('#tk_'+id+'').html(data)  
-                        }
-                        else if(element.nama_pg ==='tunjangan lama berkerja'){
-                            var id = element.id
-                            var datas= element.data_pg
-                            var data =`${rupiah.format(datas)}`
-                            $('#tlb_'+id+'').html(data)  
-                        }
-                    });  
-                    data.data.forEach(elements => {
-                if(elements.nama_pgs ==='bpjs'){
-                    var id = elements.id
-                    var datas= elements.data_pgs
-                    var data =`${rupiah.format(datas)}`
-                    $('#bpjs_'+id+'').html(data)  
-                }
-                else if(elements.nama_pgs ==='potongan gaji'){
-                    var id = elements.id
-                    var datas= elements.data_pgs
-                    var data =`${rupiah.format(datas)}`
-                    $('#potongan_'+id+'').html(data)  
-                }
-                    });  
-                    data.data.forEach(row => {
-                        // alert(row.nominal);
-                        if(row.nominal){
-                            var id = row.id
-                            var datas= row.nominal
-                            var data =`${rupiah.format(datas)}`
-                            $('#bersih_'+id+'').html(data)  
-                        }
-                    });
-                    data.data.forEach(rows => {
-                        if(rows.nama_pegawai){
-                            var id = rows.id
-                            var data= rows.nama_pegawai
-                            $('#nama_'+id+'').html(data)  
-                        }
-                            });  
 
-                    $('#list-data').DataTable();
-                
-                },
-        });
-    
-    }
-   
 
     // 
 
@@ -158,7 +87,7 @@ function hapusdata(kode) {
                     
               $('#table-laporan').html("");
               $('#table-laporan').html(data.msg);
-              GetDetail();
+            //   GetDetail();
                     
                     // alert(data);
                 
@@ -178,10 +107,26 @@ function hapusdata(kode) {
                     if(data.status === 'oke'){
                         $('#table-laporan').html("");
                         $('#table-laporan').html(data.msg);
-                        GetDetail();
+                        Swal.fire({
+                            target: document.getElementById('table-laporan'),
+                            title: "Success",
+                            text: "Berhasil Generate Gaji",
+                            type: 'success',
+                            showConfirmButton: false,
+                            timer: 2000,
+                       });
+                        // GetDetail();
                     }
                     else{
-                        alert(data.msg)
+                        // alert(data.msg)
+                        Swal.fire({
+                            target: document.getElementById('table-laporan'),
+                            title: "Error",
+                            text: data.msg,
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer: 2000,
+                       });
                     }
               
                     

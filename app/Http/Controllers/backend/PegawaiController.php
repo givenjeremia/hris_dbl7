@@ -71,6 +71,7 @@ class PegawaiController extends Controller
             'password'=> 'required',
             'email'=>'required'
         ]);
+        $currentTime = Carbon::now()->timezone('Asia/Jakarta');
         $tgl_lahir = Carbon::parse($request->tgl_lahir); 
         DB::table('pegawai')->insert([
             'nama' => $request->nama,
@@ -80,6 +81,7 @@ class PegawaiController extends Controller
             'no_rekening' => $request->no_rekening,
             'kantor_id'=>$request->kantor,
             'roles_id'=>3,
+            'created_at' => $currentTime
 
         ]);
         $id_pegawai = DB::table('pegawai')->where('nama',$request->nama)->value('id');
@@ -144,13 +146,15 @@ class PegawaiController extends Controller
             'kantor'=>'required'
         ]);
         $tgl_lahir = Carbon::parse($request->tgl_lahir);
+        $currentTime = Carbon::now()->timezone('Asia/Jakarta');
         DB::table('pegawai')->where('id', $id)->update([
             'nama' => $request->nama,
             'tgl_lahir' => $tgl_lahir->format('Y-m-d'),
             'alamat' => $request->alamat,
             'divisi_id' => $request->divisi,
             'no_rekening' => $request->no_rekening,
-            'kantor_id'=>$request->kantor
+            'kantor_id'=>$request->kantor,
+            'updated_at'=>$currentTime
         ]);
         return redirect('/backend/pegawai')->with('status','Sukses merubah data');
     }

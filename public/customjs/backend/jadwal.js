@@ -22,7 +22,7 @@ function inputjadwal(){
       { 'bulan':"December",'id':12},
     ];
 // looping data
-      let category = ['Devisi','Jabatan','Pegawai'];
+      let category = ['Devisi','Pegawai'];
       const jabatans = resource.data.jabatan;
       const pegawai = resource.data.pegawai;
       const devisi = resource.data.devisi;
@@ -91,29 +91,12 @@ function inputjadwal(){
       return id;
   }
 }
-////////////////////////////////////////////        
-/////////// category jabatan////////////////
-      else if (categorys == category[1]){
-        const { value: id } = await Queue.fire({
-        title: 'Select Jabatan',
-        input: 'select',
-        inputOptions:options_jabatan,
-        inputValue: '1',
-        confirmButtonText: 'Next',
-        showCancelButton: true,
-        currentProgressStep: 1,
-        showClass: { backdrop: 'swal2-noanimation' },
-      
-      })
-      function getId(){
-          return id;
-      }
-      }
+
         
         
       //////////////////////////////////////
     // category pegawai/////////////////
-    else if (categorys == category[2]){
+    else if (categorys == category[1]){
       const { value: id } = await Queue.fire({
       title: 'Select Pegawai',
       input: 'select',

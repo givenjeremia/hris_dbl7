@@ -28,6 +28,13 @@
             {{ session('status') }}
         </div>
         @endif
+        @if (session('gagal'))
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>Info!</h4>
+            {{ session('gagal') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
@@ -50,7 +57,7 @@
                                         <th scope="col">No</th>
                                         {{-- <th scope="col">Nama</th> --}}
                                         {{-- <th scope="col">date range</th> --}}
-                                        <th scope="col">type</th>
+                                        <th scope="col">Jenis</th>
                                         @for ($i = 1; $i <= count($date_1_month); $i++) <th scope="col" id="shift">
                                             {{$i}}</th>
                                             @endfor
@@ -60,20 +67,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $row)
+                                    @foreach ($data as $key => $row)
                                     <tr>
-                                        <th scope="row">1</th>
-                                        {{-- <td id="{{$row->type}}_{{$row->Ids}}_{{$row->id}}">{{$row->Ids}}</td> --}}
-                                        {{-- <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="ms-3">
-
-                                                    <p class=" mb-1">{{$row->tanggal}} </p>
-                                                    <p class="mx-5"></p>
-                                                </div>
-                                            </div>
-                                        </td> --}}
-                                        <td>{{$row->type}}</td>
+                                        <th scope="row">{{ $key + 1  }}</th>
+                                   
+                                        <td>{{ strtoupper($row) }}</td>
                                         @for ($i = 0; $i < count($date_1_month); $i++) @php
                                             $tanggal=explode("-",$date_1_month[$i][0])[2]; @endphp 
                                             @if($tanggal==str_pad($i+1, 2, "0" , STR_PAD_LEFT)) 
@@ -83,7 +81,7 @@
                                             $count = 0;
                                             foreach ($date_1_month[$i][1] as $item) {
                         
-                                            if($item['type'] == $row->type){
+                                            if($item['type'] == $row){
                                             $count++;
                                             }
                                 
@@ -93,7 +91,7 @@
                                             @if ($count != 0)
                                                 
                                             <td style="background-color:yellow;">
-                                                <a href="#" data-toggle="modal" data-target="#exampleModalScrollable" onclick="showDetail('{{$row->type}}','{{$date_1_month[$i][0]}}')">{{ $count }}</a>
+                                                <a href="#" data-toggle="modal" data-target="#exampleModalScrollable" onclick="showDetail('{{$row}}','{{$date_1_month[$i][0]}}')">{{ $item['count'] }}</a>
 
                                             </td>
                                             @else
@@ -128,7 +126,7 @@
                                         <th scope="col">No</th>
                                         {{-- <th scope="col">Nama</th> --}}
                                         {{-- <th scope="col">date range</th> --}}
-                                        <th scope="col">type</th>
+                                        <th scope="col">Jenis</th>
                                         @for ($i = 1; $i <= count($date_1_month); $i++) <th scope="col" id="shift">
                                             {{$i}}</th>
                                             @endfor

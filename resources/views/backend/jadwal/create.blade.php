@@ -45,13 +45,13 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">ADD SHIFT </h3>
+                        <h3 class="card-title">ADD SHIFT {{ strtoupper($type) }}</h3>
                         
                     </div>
                     <div class="card-body">
                             <form method="POST" onsubmit="return validasiinput();" role="form" enctype="multipart/form-data"
                                     action="{{url('/backend/jadwal')}}">
-                                    <input type="hidden" class="hidden" value="{{$id}}" name="Ids">
+                                    <input type="hidden" class="hidden" value="{{$id}}" name="id">
                                         {{-- <input type="text" class="hidden" value="{{$month}}" name="month"> --}}
                                         <input type="hidden" class="hidden" value="{{$type}}" name="type"> 
                         <div class="table-responsive">

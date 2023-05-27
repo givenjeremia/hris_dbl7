@@ -36,96 +36,53 @@ class JadwalshiftCotroller extends Controller
             $date_1_month[] = $start->copy()->toDateString();
             $start->addDay();
         }
-
-        // // dd($dates);
-        // $datas= DB::table('new_jadwal_shifts as sh')
-        // ->get();
-
-
-
         $data = newshift::all();
-        $data_type_in_new_shift = DB::select( DB::raw('SELECT type FROM `new_jadwal_shifts` GROUP BY type'));
+
 
         // New
-        $data_type_in_new_shift_by_ids = DB::select( DB::raw('SELECT id,Ids,type,COUNT(tanggal) AS count_tanggal FROM `new_jadwal_shifts` GROUP BY Ids,type ORDER BY Ids'));
-        $by_ids = [];
+        // Get Count By Divisi
+        $data_count_divisi = DB::select( DB::raw('SELECT id,tanggal,COUNT(tanggal) AS count_tanggal FROM `new_jadwal_shifts` WHERE divisi_id IS NOT NULL GROUP BY tanggal;'));
+        // Get Count By Pegawai
+        $data_count_pegawai = DB::select( DB::raw('SELECT id,tanggal,COUNT(tanggal) AS count_tanggal FROM `new_jadwal_shifts` WHERE pegawai_id IS NOT NULL GROUP BY tanggal;'));
+        // $data_type_in_new_shift_by_ids = DB::select( DB::raw('SELECT id,Ids,type,COUNT(tanggal) AS count_tanggal FROM `new_jadwal_shifts` GROUP BY Ids,type ORDER BY Ids'));
+       
         foreach($date_1_month as $key => $month){
             $date_1_month[$key] =[];
-            $date_1_month[$key][0] = $month;
-            foreach ($data_type_in_new_shift_by_ids  as  $value) {
-                
-                foreach($data as  $shift){
-                    if($month == $shift->tanggal && $value->type == $shift->type && $value->Ids == $shift->Ids  ) {
 
-                        $detail[$shift->tanggal][$shift->id]= [
-                            'ids'=>$shift->Ids,
-                            'type'=> $shift->type ,
-                            'tanggal'=>$shift->tanggal,
-                        ];
-                        $date_1_month[$key][1] = $detail[$shift->tanggal];
-                    }
-                    
+            array_push($date_1_month[$key],$month);
+            $date_1_month[$key][1] = [];
+            
+            foreach ($data_count_divisi as  $value) {
+                if($month == $value->tanggal ) {
+                
+                // $date_1_month[$key][1] = 
+                array_push($date_1_month[$key][1],['count' =>$value->count_tanggal,'type'=>'divisi']);
+
                 }
 
             }
+    
+            foreach ($data_count_pegawai as  $value) {
+                if($month == $value->tanggal ) {
+                    $count_lama = $date_1_month[$key][1];
+
+                    $count_baru = $value->count_tanggal;
+                    
+                    // $date_1_month[$key][1] = $count_lama + $count_baru;
+                    // $date_1_month[$key][1] = ['count' =>$value->count_tanggal,'type'=>'divisi'];
+                    array_push($date_1_month[$key][1],['count' =>$value->count_tanggal,'type'=>'pegawai']);
+    
+                }
+
+            }
+            
            
 
         }
-        // dd(count($date_1_month[12]));
-        // dd($by_ids);
-        // gabung
-        // dd($data_type_in_new_shift);
-        $jadwal_shift = [];
-        $jadwal_shift['Devisi']=[];
-        $jadwal_shift['Jabatan']=[];
-        $jadwal_shift['Pegawai']=[];
-        // foreach ($data_type_in_new_shift as $value) {
-        //     # code...
-            foreach ($data as $shift) {
-                # code...
-                
-                // if($value->type == $shift->type){
-                    // echo $shift->type;
-                    if($shift->type == "Devisi"){
-                        $devisi = devisi::find($shift->Ids);
-                
-                        $detail = [
-                            'id' => $devisi->id,
-                            'nama'=> $devisi->nama,
-                            'tanggal'=>$shift->tanggal,
-                            'keterangan'=>$shift->keterangan,
-                        ];
-                        // dd($detail);
-
-                        array_push( $jadwal_shift['Devisi'] ,$detail);
-                        
-                    }
-                    elseif($shift->type == "Jabatan"){
-                        $jabatan = jabatan::find($shift->Ids);
-                        $detail[$shift->id] = [
-                            'id' => $jabatan->id,
-                            'nama'=> $jabatan->nama,
-                            'tanggal'=>$shift->tanggal,
-                            'keterangan'=>$shift->keterangan,
-                        ];
-                        array_push( $jadwal_shift['Jabatan'] ,$detail[$shift->id]);
-                    }
-                    else{
-                        $pegawai = pegawai::find($shift->Ids);
-                        $detail[$shift->id] = [
-                            'id' => $pegawai->id,
-                            'nama'=> $pegawai->nama,
-                            'tanggal'=>$shift->tanggal,
-                            'keterangan'=>$shift->keterangan,
-                        ];
-                        array_push( $jadwal_shift['Pegawai'],$detail[$shift->id]);
-
-                    }
-                // }
-            }
-        // }
-        // dd($jadwal_shift);
-        $data = DB::select( DB::raw('SELECT type FROM `new_jadwal_shifts` GROUP BY type ORDER BY type'));
+        // dd($date_1_month);
+   
+        // $data = DB::select( DB::raw('SELECT type FROM `new_jadwal_shifts` GROUP BY type ORDER BY type'));
+        $data = ['divisi','pegawai'];
 
         
         return view('backend.jadwal.index',['data'=>$data ,'date_1_month'=>$date_1_month,'bulan_sekarang'=>Carbon::now()->format('F')]);
@@ -188,18 +145,23 @@ class JadwalshiftCotroller extends Controller
     }
 
     public function detailJadwal($type,$tanggal){
-        $shift = newshift::where('type',$type)->where('tanggal',$tanggal)->get();
+        // 'divisi','pegawai'
+        $type_id = '';
+        if($type == 'divisi'){
+            $type_id = 'divisi_id';
+        }
+        else{
+            $type_id = 'pegawai_id';
+        }
+        $shift = newshift::whereNotNull($type_id)->where('tanggal',$tanggal)->get();
         $title = $type.' -- '.date('d-m-Y', strtotime($tanggal));
         $detail_shift = [];
         foreach ( $shift  as $key => $value) {
-            if($value->type == "Devisi"){
-               $types = devisi::find($value->Ids);
-            }
-            elseif($value->type == "Jabatan"){
-                $types = jabatan::find($value->Ids);
+            if(empty($value->divisi_id)){
+                $types= pegawai::find($value->pegawai_id);
             }
             else{
-                $types= pegawai::find($value->Ids);
+                $types = devisi::find($value->divisi_id);
             }
             $details = [
                 'id_jadwal_shift'=>$value->id,
@@ -229,22 +191,37 @@ class JadwalshiftCotroller extends Controller
      */
     public function store(Request $request)
     {
+        // Cek Jika Ada Shift Yang Sudah Di Simpan 
+        foreach ($request->get('input') as $value) {
+            $divisi_id = $request->get('type') == 'Devisi' ? $request->get('id') : null;
+            $pegawai_id = $request->get('type') == 'Pegawai' ? $request->get('id') : null;
+            $tanggal = $value['date'];
+            $check_divisi  = newshift::where( 'divisi_id' , $divisi_id )->where('tanggal', $tanggal)->get();
+            $check_pegawai  = newshift::where( 'pegawai_id' , $pegawai_id )->where('tanggal', $tanggal)->get();
+            if(count($check_divisi) > 0 or count($check_pegawai) > 0) {
+                return redirect('/backend/jadwal')->with('gagal','Ada Kesalahan Input Shift');
+            }
+
+
+        }
         foreach ($request->get('input') as $value) {
             // dd($request->get('Ids'));
             $new = new newshift();
-            $new->Ids = $request->get('Ids');
-            $new->type = $request->get('type');
+            // dd($request->get('type'));
+            $new->divisi_id = $request->get('type') == 'Devisi' ? $request->get('id') : null;
+            $new->pegawai_id = $request->get('type') == 'Pegawai' ? $request->get('id') : null;
             $new->tanggal = $value['date'];
             $new->shift_id = $value['shift'];
             $new->keterangan = $value['keterangan'];
             $new->save();
+            
 
 
             # code...
         }
         // dd($request->get('input'));
                 // $cuti =newshift::insert($request->all()) ;
-        return redirect('/backend/jadwal')->with('status','Sukses merubah data');
+        return redirect('/backend/jadwal')->with('status','Sukses menambah data');
 //    response
             
         
