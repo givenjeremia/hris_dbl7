@@ -57,9 +57,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Divisi</label>
-                                        <select name="divisi" id="" class="form-control" required>
-                                            @foreach($divisi as $row)
+                                        <label for="exampleInputEmail1">Jabatan</label>
+                                        <select name="jabatan" id="" class="form-control" required>
+                                            @foreach($jabatan as $row)
                                                 <option value="{{$row->id}}">{{$row->nama}}</option>
                                             @endforeach
                                         </select>

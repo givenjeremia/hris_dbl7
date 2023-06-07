@@ -60,10 +60,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Divisi</label>
-                                        <select name="divisi" id="" class="form-control" required>
-                                            @foreach($divisi as $item)
-                                                <option value="{{$item->id}}"@if($row->divisi_id == $item->id) selected @endif>{{$item->nama}}</option>
+                                        <label for="exampleInputEmail1">Jabatan</label>
+                                        <select name="jabatan" id="" class="form-control" required>
+                                            @foreach($jabatan as $item)
+                                                <option value="{{$item->id}}"@if($row->jabatan_id == $item->id) selected @endif>{{$item->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>

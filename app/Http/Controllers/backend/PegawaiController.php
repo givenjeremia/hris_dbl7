@@ -24,18 +24,17 @@ class PegawaiController extends Controller
 
     public function listdata(){
         return Datatables::of(DB::table('pegawai')
-        ->leftjoin('divisi','divisi.id','=','pegawai.divisi_id')
+        ->leftjoin('jabatan','jabatan.id','=','pegawai.jabatan_id')
         ->leftjoin('client','client.id','=','pegawai.kantor_id')
-        ->select('pegawai.*','divisi.nama as divisi','client.nama as kantor')
+        ->select('pegawai.*','jabatan.nama as jabatan','client.nama as kantor')
         ->get())->make(true);
     }
     public function listdataajax(){
         return Datatables::of(DB::table('pegawai')
         ->crossJoin('new_jadwal_shifts as jd')
-        ->leftjoin('divisi','divisi.id','=','pegawai.divisi_id')
         ->leftjoin('jabatan','jabatan.id','=','pegawai.jabatan_id')
         ->leftjoin('client','client.id','=','pegawai.kantor_id')
-        ->select('pegawai.*','divisi.nama as divisi','jabatan.nama as jabatan','client.nama as kantor','jd.id as id_shift')
+        ->select('pegawai.*','jabatan.nama as jabatan','client.nama as kantor','jd.id as id_shift')
         ->get())->make(true);
     }
 
@@ -66,7 +65,7 @@ class PegawaiController extends Controller
             'nama' => 'required',
             'tgl_lahir' => 'required',
             'alamat' => 'required',
-            'divisi' => 'required',
+            'jabatan' => 'required',
             'no_rekening' => 'required',
             'password'=> 'required',
             'email'=>'required'
@@ -77,7 +76,7 @@ class PegawaiController extends Controller
             'nama' => $request->nama,
             'tgl_lahir' => $tgl_lahir->format('Y-m-d'),
             'alamat' => $request->alamat,
-            'divisi_id' => $request->divisi,
+            'jabatan_id' => $request->jabatan,
             'no_rekening' => $request->no_rekening,
             'kantor_id'=>$request->kantor,
             'roles_id'=>3,
@@ -141,7 +140,7 @@ class PegawaiController extends Controller
             'nama' => 'required',
             'tgl_lahir' => 'required',
             'alamat' => 'required',
-            'divisi' => 'required',
+            'jabatan' => 'required',
             'no_rekening' => 'required',
             'kantor'=>'required'
         ]);
@@ -151,7 +150,7 @@ class PegawaiController extends Controller
             'nama' => $request->nama,
             'tgl_lahir' => $tgl_lahir->format('Y-m-d'),
             'alamat' => $request->alamat,
-            'divisi_id' => $request->divisi,
+            'jabatan_id' => $request->jabatan,
             'no_rekening' => $request->no_rekening,
             'kantor_id'=>$request->kantor,
             'updated_at'=>$currentTime
