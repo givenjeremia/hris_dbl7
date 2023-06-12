@@ -96,7 +96,9 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama</label>
-                        <input type="text" class="form-control" name="nama" required autofocus>
+                        <input type="text" class="form-control" id="inputNamaDivisi" name="nama" required autofocus>
+                    
+                        <div id="validasi"></div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tunjangan</label>
@@ -105,7 +107,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" id="btnTambahDivisi" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>

@@ -48,12 +48,11 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Client</th>
-                                        <th>Masa kontrak Sampai Dengan </th>
                                         <th>Alamat</th>
                                         <th>Email</th>
                                         <th>Lokasi Kerja</th>
-                                        <th>lat</th>
-                                        <th>long</th>
+                                        {{-- <th>lat</th>
+                                        <th>long</th> --}}
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -64,12 +63,11 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Client</th>
-                                        <th>Masa kontrak Sampai Dengan </th>
                                         <th>Alamat</th>
                                         <th>Email</th>
                                         <th>Lokasi Kerja</th>
-                                        <th>lat</th>
-                                        <th>long</th>
+                                        {{-- <th>lat</th>
+                                        <th>long</th> --}}
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -81,6 +79,18 @@
         </div>
     </div><!-- /.container-fluid -->
 </div>
+
+
+<div id="modal-div"></div>
+{{-- Modal Edit --}}
+<div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-lg-down">
+        <div class="modal-content" id="modalContent">
+
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('customjs')

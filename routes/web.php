@@ -29,6 +29,8 @@ Route::prefix('backend')->group(function () {
 
     Route::resource('/divisi', 'backend\DivisiController');
     Route::post('/divisi/getEditForm','backend\DivisiController@getEditForm')->name('divisi.getEditForm');
+    Route::post('/divisi/cek-nama', 'backend\DivisiController@cekNama');
+
 
     Route::get('/data-divisi','backend\DivisiController@listdata');
     Route::get('/data-divisi-ajax','backend\DivisiController@listdataajax');
@@ -56,6 +58,14 @@ Route::prefix('backend')->group(function () {
     // Client Root
     Route::resource('/client', 'backend\ClientController');
     Route::get('/data-client', 'backend\ClientController@listdata');
+    Route::post('/client/cek-nama', 'backend\ClientController@cekNama');
+
+    Route::get('/client/show-modal-kontrak/{id}', 'backend\ClientController@showModalKontrak');
+    Route::get('/client/show-modal-tambah-kontrak/{id}', 'backend\ClientController@showModalTambahKontrak');
+    Route::post('/client/tambah-kontrak', 'backend\ClientController@tambahKontrak');
+
+
+
     
     //jadwal Shift
     Route::resource('jadwal','backend\JadwalshiftCotroller');

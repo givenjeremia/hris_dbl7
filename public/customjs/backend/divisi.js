@@ -92,3 +92,26 @@ function getEditForm(id)
     }
   });
 }
+
+
+$('#inputNamaDivisi').on('keyup', function(){
+    var value = $(this).val();
+    $.ajax({
+        type:'POST',
+        url:'/backend/divisi/cek-nama',
+        data:{
+            '_token':$('meta[name="csrf-token"]').attr('content'),
+              'value':value
+             },
+        success: function(data){
+            if(data.status =='ada'){
+                $('#validasi').html('<div class="text-danger">Nama Divisi Sudah Ada</div>')
+                $('#btnTambahDivisi').prop('disabled', true);
+            }
+            else{
+                $('#btnTambahDivisi').prop('disabled', false);
+                $('#validasi').html('<div class="text-success">Nama Divisi Belum Ada</div>')
+            }
+        }
+    });
+})

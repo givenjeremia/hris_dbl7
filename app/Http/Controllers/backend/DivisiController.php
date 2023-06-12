@@ -128,7 +128,9 @@ class DivisiController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('divisi')->where('id', $id)->delete();
+        DB::table('divisi')->update([
+            'delete_at' => 1
+        ]);
     }
 
     public function getEditForm(Request $request){
@@ -141,5 +143,21 @@ class DivisiController extends Controller
             'status'=>'oke',
             'msg'=>view('backend.data.divisi.edit_modal', compact('divisi'))->render()
         ),200);
+    }
+
+    public function cekNama(Request $request)
+    {
+        $nama = $request->get('value');
+        $divisi = devisi::where('nama',$nama)->get();
+        if(count($divisi) > 0){
+            return response()->json(array(
+                'status'=>'ada',
+            ),200);
+        }
+        else{
+            return response()->json(array(
+                'status'=>'kosong',
+            ),200);
+        }
     }
 }

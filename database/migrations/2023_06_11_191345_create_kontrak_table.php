@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ClientTabel extends Migration
+class CreateKontrakTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class ClientTabel extends Migration
      */
     public function up()
     {
-        Schema::create('client', function (Blueprint $table) {
+        Schema::create('kontrak', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->nullable();
-            // $table->date('kontrak')->nullable();
-            $table->string('email')->nullable();
-            $table->longtext('alamat')->nullable();
-            $table->string('lokasi')->nullable();
-            $table->longtext('lat')->nullable();
-            $table->longtext('long')->nullable();
+            $table->date('tanggal_mulai')->nullable();
+            $table->date('tanggal_akhir')->nullable();
+            // Client ID
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->foreign('client_id')->references('id')->on('client');
+
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class ClientTabel extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client');
+        Schema::dropIfExists('kontrak');
     }
 }

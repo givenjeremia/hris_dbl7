@@ -40,20 +40,17 @@
                             5.Email
                             6.Lokasi Kerja
                             7.LongLat --}}
+                        <input type="hidden" id="data-page-client" value="{{ csrf_token() }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nama Client</label>
-                                        <input type="text" class="form-control" name="nama" required autofocus>
+                                        <input type="text" class="form-control" id="inputNamaClient" name="nama" required autofocus>
+                                        <div id='validasi'></div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Masa Kontrak Sampai Dengan</label>
-                                        <input type="date" class="form-control" name="kontrak" required>
-                                    </div>
-                                </div>
+                            
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
@@ -63,7 +60,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Alamat</label>
-                                        <input type="text" class="form-control" name="alamat" required>
+                                        <textarea name="alamat" class="form-control" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -92,7 +89,7 @@
 
                         <div class="card-footer">
                             <button type="reset" onclick="history.go(-1)" class="btn btn-danger">Kembali</button>
-                            <button type="submit" class="btn btn-primary float-right">Simpan</button>
+                            <button type="submit" id="btnTambahClient" class="btn btn-primary float-right">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -107,4 +104,5 @@
 
 @push('customscripts')
 <script src="{{asset('customjs/backend/admin_input.js')}}"></script>
+<script src="{{asset('customjs/backend/client.js')}}"></script>
 @endpush

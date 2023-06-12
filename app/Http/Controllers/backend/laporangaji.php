@@ -86,6 +86,20 @@ class laporangaji extends Controller
         
         // Cek Apakah Bulan Ini Sudah Di Generate
         $params = Carbon::now()->year.'-'.Carbon::now()->format('m').'%';
+        // Hapus Data Yang Sudah Ada
+        $before = pendapatan::whereDate('created_at', 'like',$params)->get();
+        if(count($before) != 0){
+
+            foreach ($before as $key => $value) {
+                # code...
+                $id_gaji = $value->potongangajis_id ;
+                $id_bpjs = $value->potonganbpjs_id ;
+                $value->delete();
+                $p = DB::select(DB::raw('DELETE FROM `potongangajis` WHERE `id` = '.$id_gaji ));
+                $p = DB::select(DB::raw('DELETE FROM `potongangajis` WHERE `id` = '.$id_bpjs ));
+                // dd($value);
+            }
+        }
         $data = pendapatan::whereDate('created_at', 'like',$params)->get();
         // dd($params);
         // dd(count($data));

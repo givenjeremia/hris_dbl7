@@ -132,7 +132,9 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('jabatan')->where('id', $id)->delete();
+        DB::table('jabatan')->where('id', $id)->update([
+            'delete_at' => 1
+        ]);
     }
     public function getEditForm(Request $request){
         // dd("Masuk");p

@@ -131,7 +131,9 @@ class ShiftController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('shift')->where('id', $id)->delete();
+        DB::table('shift')->where('id', $id)->update([
+            'delete_at' =>1
+        ]);
     }
 
     public function getEditForm(Request $request){

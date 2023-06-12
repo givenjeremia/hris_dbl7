@@ -47,13 +47,7 @@
                                             required autofocus>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Masa Kontrak</label>
-                                        <input type="date" class="form-control" name="kontrak"
-                                            value="{{$row->kontrak}}" required>
-                                    </div>
-                                </div>
+                        
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
@@ -64,8 +58,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">alamat</label>
-                                        <input type="text" class="form-control" name="alamat" value="{{$row->alamat}}"
-                                            required>
+                                        <textarea name="alamat" class="form-control" required>{{$row->alamat}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

@@ -166,7 +166,9 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('pegawai')->where('id', $id)->delete();
+        DB::table('pegawai')->where('id', $id)->update([
+            'delete_at' => 1
+        ]);
         User::where('id_pegawai',$id)->delete();
     }
 }
